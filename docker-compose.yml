@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  rstudio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rstudio
+    environment:
+      - USERID=1001
+      - GROUPID=1001
+      - USER
+      - PASSWORD
+      - ROOT=FALSE
+    restart: always
+    volumes:
+      - data:/data
+    ports:
+      - "8787:8787"
+
+volumes:
+    data:
