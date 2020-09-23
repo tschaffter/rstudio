@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*.*.*'
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Lint Dockerfiles
+      uses: docker://hadolint/hadolint:latest
+      with:
+        entrypoint: hadolint
+        args: Dockerfile
+    - name: Check that packages in requirements.txt files are in asc order
+      run: |
+        sort -f --check conda/sage/requirements.txt
