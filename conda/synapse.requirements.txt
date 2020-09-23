@@ -1,0 +1,3 @@
+challengeutils==3.0.0
+pandas==1.1.2
+synapseclient==2.2.0

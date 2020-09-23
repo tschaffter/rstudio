@@ -1,0 +1,8 @@
+name: synapse
+channels:
+  - defaults
+dependencies:
+  - python=3.8.5
+  - pip=20.2.2
+  - pip:
+    - -r file:synapse.requirements.txt
