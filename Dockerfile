@@ -1,13 +1,13 @@
 FROM rocker/rstudio:4.0.2
 
 LABEL maintainer="tschaffter@protonmail.com"
-LABEL version="1.0"
-LABEL description="Base RStudio image"
+LABEL version="0.1.0"
+LABEL description="RStudio with conda support"
 
 ENV miniconda3_version="py38_4.8.3"
 ENV PATH="/opt/miniconda/bin:${PATH}"
 
-# Enable shell pipefail option
+# Safer bash scripts with 'set -euxo pipefail'
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
 
 # Install dependencies
@@ -30,35 +30,29 @@ RUN install2.r --error \
         reticulate \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
-# Prepare s6 init scripts
-RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-userconf
-COPY add_miniconda.sh /etc/cont-init.d/20-add_miniconda
+# Install miniconda
+RUN curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+    && bash Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+        -b \
+        -p /opt/miniconda \
+    && rm -f Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+    && useradd -s /bin/bash miniconda \
+    && chown -R miniconda:miniconda /opt/miniconda \
+    && chmod -R go-w /opt/miniconda \
+    && conda --version
+
+# Copy conda env templates
 COPY conda /tmp/conda
 
+# Install conda env 'sage'
+RUN conda env create -f /tmp/conda/sage/sage.yaml \
+    && rm -fr /tmp/conda/sage
+
+# Fix libssl issue that affects conda env used with reticulate
+RUN cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /opt/miniconda/envs/sage/lib/libssl.so.1.1
+
+# Make it easier to add s6 init scripts
+RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-userconf
+
+# Add sample project
 COPY project-sample /home/test/project
-
-
-
-# WORKDIR /home/rstudio
-
-# # Install miniconda
-# RUN curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
-#     && mkdir /home/rstudio/.conda \
-#     && bash Miniconda3-${miniconda3_version}-Linux-x86_64.sh -b \
-#     && rm -f Miniconda3-${miniconda3_version}-Linux-x86_64.sh
-
-# ENV PATH="/home/rstudio/miniconda3/bin:${PATH}"
-# RUN conda --version
-
-# # Create conda environment named "synapse"
-# RUN conda create --name py python=3.8 \
-#     && conda run --name py pip install \
-#         synapseclient==2.2.0 \
-#         pandas==1.1.2
-
-# # reticulate requires to set $LD_LIBRARY_PATH before RStudio starts
-# ENV LD_LIBRARY_PATH="/home/rstudio/miniconda3/envs/py/lib:${LD_LIBRARY_PATH}"
-
-# Enable user rstudio to run CMD ["/init"]
-# CMD ["sudo", "/init"]
-

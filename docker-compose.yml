@@ -11,11 +11,14 @@ services:
       # - GROUPID=1001
       # - USER=test
       - PASSWORD
-      - ROOT=FALSE
-      - MINICONDA_VERSION=py38_4.8.3
+      - SYN_USERNAME
+      - SYN_API_KEY
+      # - ROOT=FALSE
+      # - MINICONDA_VERSION=py38_4.8.3
     restart: always
     volumes:
       - data:/data
+      - /home/tschaffter/dev/rstudio/project-sample:/proj
     ports:
       - "8787:8787"
 
