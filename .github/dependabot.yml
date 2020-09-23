@@ -1,0 +1,10 @@
+version: 2
+
+updates:
+  - package-ecosystem: "pip"
+    directory: "/conda/sage"
+    schedule:
+      interval: "daily"
+    target-branch: "develop"
+    reviewers:
+      - "tschaffter"
