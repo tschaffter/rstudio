@@ -27,10 +27,23 @@ use_condaenv("sage", conda = "auto", required = TRUE)
 synapseclient <- reticulate::import('synapseclient')
 syn <- synapseclient$Synapse()
 
+Sys.getenv("PATH")
+
 syn$login(
     email = Sys.getenv("SYN_USERNAME"), 
     apiKey = Sys.getenv("SYN_API_KEY"), 
     silent = FALSE)
 ```
+
+```{python}
+import pandas
+
+a = 2
+```
+
+```{r}
+py$a
+```
+
 
 

@@ -27,7 +27,24 @@ RUN apt-get update -qq -y \
 # Install R dependencies
 # TODO: How to specify package version?
 RUN install2.r --error \
+        base64enc \
+        digest \
+        evaluate \
+        glue \
+        highr \
+        htmltools \
+        knitr \
+        magrittr \
+        markdown \
+        mime \
         reticulate \
+        rmarkdown \
+        rprojroot \
+        stringi \
+        stringr \
+        tinytex \
+        xfun \
+        yaml \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 # Install miniconda

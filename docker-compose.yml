@@ -9,18 +9,20 @@ services:
     environment:
       # - USERID=1001
       # - GROUPID=1001
-      # - USER=test
+      - USER=test
       - PASSWORD
       - SYN_USERNAME
-      - SYN_API_KEY
+      - SYN_APIKEY
       # - ROOT=FALSE
       # - MINICONDA_VERSION=py38_4.8.3
     restart: always
     volumes:
       - data:/data
-      - /home/tschaffter/dev/rstudio/project-sample:/proj
+      - home-persist:/home/${USER}/persist
+      # - /home/tschaffter/dev/rstudio/project-sample:/proj
     ports:
       - "8787:8787"
 
 volumes:
     data:
+    home-persist:
