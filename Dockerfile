@@ -25,7 +25,6 @@ RUN apt-get update -qq -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install R dependencies
-# TODO: How to specify package version?
 RUN install2.r --error \
         base64enc \
         digest \

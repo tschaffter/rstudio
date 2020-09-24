@@ -9,7 +9,7 @@ services:
     environment:
       # - USERID=1001
       # - GROUPID=1001
-      - USER=test
+      - USER=test2
       - PASSWORD
       - SYN_USERNAME
       - SYN_APIKEY
