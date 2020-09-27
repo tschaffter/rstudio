@@ -20,6 +20,14 @@ TBA
 
 TBA
 
+## Access logs
+
+Follow the logs using `docker logs`
+
+    docker logs --follow rstudio
+
+Rotating log files are available in `/var/log/rstudio`.
+
 <!-- Definitions -->
 
 [rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio

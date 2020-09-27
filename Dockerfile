@@ -2,7 +2,7 @@ FROM rocker/rstudio:4.0.2
 
 LABEL maintainer="tschaffter@protonmail.com"
 LABEL version="0.1.0"
-LABEL description="RStudio with conda support"
+LABEL description="Base image for RStudio with conda support"
 
 ENV miniconda3_version="py38_4.8.3"
 ENV PATH="/opt/miniconda/bin:${PATH}"
@@ -23,32 +23,6 @@ RUN apt-get update -qq -y \
     && apt-get -y autoclean \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
-
-# Install R dependencies
-
-
-# RUN install2.r --error \
-#         # Install dependencies required to render HTML notebooks
-#         base64enc \
-#         digest \
-#         evaluate \
-#         glue \
-#         highr \
-#         htmltools \
-#         knitr \
-#         magrittr \
-#         markdown \
-#         mime \
-#         rmarkdown \
-#         rprojroot \
-#         stringi \
-#         stringr \
-#         tinytex \
-#         xfun \
-#         yaml \
-#         # Install dependencies required to use Python/conda
-#         reticulate \
-#     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 # Install R dependencies to
 # - render HTML notebooks
@@ -79,8 +53,9 @@ RUN conda env create -f /tmp/conda/sage/sage.yaml \
 # Fix libssl issue that affects conda env used with reticulate
 RUN cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /opt/miniconda/envs/sage/lib/libssl.so.1.1
 
-# Make it easier to add s6 init scripts
+# Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-userconf
+COPY root /
 
 # Add sample project
 COPY project-sample /home/test/project

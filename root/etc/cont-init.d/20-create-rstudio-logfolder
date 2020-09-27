@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mkdir -p /var/log/rstudio
+chown nobody:nogroup /var/log/rstudio
