@@ -25,26 +25,38 @@ RUN apt-get update -qq -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install R dependencies
-RUN install2.r --error \
-        base64enc \
-        digest \
-        evaluate \
-        glue \
-        highr \
-        htmltools \
-        knitr \
-        magrittr \
-        markdown \
-        mime \
-        reticulate \
-        rmarkdown \
-        rprojroot \
-        stringi \
-        stringr \
-        tinytex \
-        xfun \
-        yaml \
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+
+
+# RUN install2.r --error \
+#         # Install dependencies required to render HTML notebooks
+#         base64enc \
+#         digest \
+#         evaluate \
+#         glue \
+#         highr \
+#         htmltools \
+#         knitr \
+#         magrittr \
+#         markdown \
+#         mime \
+#         rmarkdown \
+#         rprojroot \
+#         stringi \
+#         stringr \
+#         tinytex \
+#         xfun \
+#         yaml \
+#         # Install dependencies required to use Python/conda
+#         reticulate \
+#     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
+
+# Install R dependencies to
+# - render HTML notebooks
+# - use Python/conda
+COPY renv.lock /tmp/renv.lock
+RUN install2.r --error renv \
+    && R -e "renv::restore(lockfile='/tmp/renv.lock')" \
+    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
 
 # Install miniconda
 RUN curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
