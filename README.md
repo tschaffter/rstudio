@@ -12,6 +12,14 @@ RStudio with conda support and useful packages.
 
 TBA
 
+## Specifications
+
+- Extends [rocker/rstudio] image
+
 ## Usage
 
 TBA
+
+<!-- Definitions -->
+
+[rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
