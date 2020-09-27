@@ -7,16 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: rstudio
     env_file:
-      rstudio-variables.env
-    # environment:
-      # - USERID=1001
-      # - GROUPID=1001
-      # - USER=test
-      # - PASSWORD
-      # - SYN_USERNAME
-      # - SYN_APIKEY
-      # - ROOT=FALSE
-      # - MINICONDA_VERSION=py38_4.8.3
+      .env
     restart: always
     volumes:
       - data:/data
