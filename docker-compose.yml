@@ -6,11 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: rstudio
-    environment:
+    env_file:
+      rstudio-variables.env
+    # environment:
       # - USERID=1001
       # - GROUPID=1001
-      - USER=test
-      - PASSWORD
+      # - USER=test
+      # - PASSWORD
       # - SYN_USERNAME
       # - SYN_APIKEY
       # - ROOT=FALSE

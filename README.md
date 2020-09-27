@@ -16,9 +16,46 @@ TBA
 
 - Extends the Docker image [rocker/rstudio]
 
-## Usage
+## Quickstart
 
-TBA
+    docker run --rm -p 8787:8787 -e PASSWORD=yourpassword tschaffter/rstudio
+
+## Change the default username
+
+The default username set by [rocker/rstudio] is `rstudio`. It is recommended to
+use a different username for better security. This is achieved by setting the
+environment variable `USER`
+
+    docker run --rm -p 8787:8787 \
+        -e USER=yourusername \
+        -e PASSWORD=yourpassword \
+        tschaffter/rstudio
+
+## Set user / group identifiers
+
+When using volumes (`-v` flags) permissions issues can arise between the host OS
+and the container, [rocker/rstudio] avoid this issue by allowing you to specify
+the user `USERID` and group `GROUPID`.
+
+Ensure any volume directories on the host are owned by the same user you specify
+and any permissions issues will vanish like magic.
+
+In this instance `USERID=1000` and `GROUPID=1000`, to find yours use id user as
+below:
+
+    $ id username
+    uid=1000(abc) gid=1000(abc) groups=1000(abc)
+
+## Start RStudio with docker-compose
+
+This repository provides a `docker-compose.yml` to enable you to store your
+configuration variables to file and start RStudio with a single command.
+
+1. Copy *rstudio-variables.env.sample* to *rstudio-variables.env*
+2. Update the configuration in *rstudio-variables.env*
+3. Start RStudio
+
+        docker-compose up -d
 
 ## Access logs
 
