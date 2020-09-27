@@ -28,5 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Set environment variables
+      run: |
+        cp .env.sample .env
+        export $(grep -v '^#' .env | xargs -d '\n')
     - name: Validate docker-compose.yml
       run: docker-compose -f docker-compose.yml config >/dev/null
