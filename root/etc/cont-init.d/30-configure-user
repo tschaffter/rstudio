@@ -1,0 +1,43 @@
+#!/usr/bin/with-contenv bash
+
+set -euo pipefail
+
+SYNAPSE_CONFIG_FILENAME="/home/${USER}/.synapseConfig"
+BASHRC_FILENAME="/home/${USER}/.bashrc"
+
+# Change the shell of the user to bash
+usermod --shell /bin/bash ${USER}
+
+# Create Synapse Python client configuration file
+if [[ ! -z ${SYNAPSE_USERNAME} && ! -z ${SYNAPSE_API_KEY} ]]; then
+    if [ ! -f ${SYNAPSE_CONFIG_FILENAME} ]; then
+        printf "%s\n" \
+            "[authentication]" \
+            "username = ${SYNAPSE_USERNAME}" \
+            "apikey = ${SYNAPSE_API_KEY}" | tee -a ${SYNAPSE_CONFIG_FILENAME} >/dev/null
+
+        chown "${USER}:${USER}" ${SYNAPSE_CONFIG_FILENAME}
+        chmod 600 ${SYNAPSE_CONFIG_FILENAME}
+    fi
+fi
+
+# Create ~/.bashrc
+if [[ ! -f ${BASHRC_FILENAME} ]]; then
+    echo "export PATH=${PATH}" > ${BASHRC_FILENAME}
+
+    chown "${USER}:${USER}" ${BASHRC_FILENAME}
+    chmod 644 ${BASHRC_FILENAME}
+fi
+
+# Fix sudo: setrlimit(RLIMIT_CORE): Operation not permitted
+# https://github.com/sudo-project/sudo/issues/42#issuecomment-659253293
+echo "Set disable_coredump false" >> /etc/sudo.conf
+
+# Configure shell to use `conda activate`
+# TODO
+
+# sudo -u rstudio bash <<EOF
+# conda --version
+# conda config --set auto_activate_base false
+# conda init bash
+# EOF
