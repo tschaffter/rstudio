@@ -11,8 +11,8 @@ services:
       # - GROUPID=1001
       - USER=test
       - PASSWORD
-      - SYN_USERNAME
-      - SYN_APIKEY
+      # - SYN_USERNAME
+      # - SYN_APIKEY
       # - ROOT=FALSE
       # - MINICONDA_VERSION=py38_4.8.3
     restart: always
