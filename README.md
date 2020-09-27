@@ -14,7 +14,7 @@ TBA
 
 ## Specifications
 
-- Extends [rocker/rstudio] image
+- Extends the Docker image [rocker/rstudio]
 
 ## Usage
 
