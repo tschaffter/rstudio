@@ -6,15 +6,15 @@
 [![GitHub CI](https://img.shields.io/github/workflow/status/tschaffter/rstudio/ci.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/tschaffter/rstudio)
 [![GitHub License](https://img.shields.io/github/license/tschaffter/rstudio.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/tschaffter/rstudio)
 
-RStudio with conda support and useful packages.
-
-## Motivation
-
-TBA
+Base image with RStudio and Conda.
 
 ## Specifications
 
 - Extends the Docker image [rocker/rstudio]
+- Includes R packages required to
+  - render HTML notebooks
+  - use Python/conda (`reticulate`)
+- Includes [Miniconda]
 
 ## Quickstart
 
@@ -51,6 +51,16 @@ below:
 
 Set the environment variable `ROOT=true` (default is `false`).
 
+## Set Synapse credentials
+
+Set the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_API_KEY`. If both
+variables are set, they will be used to create the configuration file
+`~/.synapseConfig`.
+
+This Docker image comes with [Miniconda] installed (see below) and a conda
+environment named `sage`. This environment provides the [Synapse Python client]
+that you can use to interact with the collaborative platform [Synapse].
+
 ## Start RStudio with docker-compose
 
 This repository provides a `docker-compose.yml` to enable you to store your
@@ -70,7 +80,7 @@ Follow the logs using `docker logs`
 
 Rotating log files are available in `/var/log/rstudio`.
 
-## Use Conda
+## Using Conda
 
 ### From the terminal
 
@@ -91,23 +101,27 @@ automatically activating the default environment after logging in.
 
 ### Using R
 
+Run the following code in RStudio to activate the conda environment `sage` that
+comes pre-installed with this Docker image.
 
+    > library(reticulate)
+    > conda_list()
+        name                              python
+    1 miniconda           /opt/miniconda/bin/python
+    2      sage /opt/miniconda/envs/sage/bin/python
+    > use_condaenv("sage", required = TRUE)
 
+If you have specified the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_API_KEY`, run the code below to import the [Synapse Python client] and
+login to Synapse.
 
-
-
-
-> library(reticulate)
-> conda_list(conda = "auto")
-       name                              python
-1 miniconda           /opt/miniconda/bin/python
-2      sage /opt/miniconda/envs/sage/bin/python
-> use_condaenv("sage", conda = "auto", required = TRUE)
-> synapseclient <- reticulate::import('synapseclient')
-> syn <- synapseclient$Synapse()
-> syn$login()
-Welcome, Thomas Schaffter!
+    > synapseclient <- reticulate::import('synapseclient')
+    > syn <- synapseclient$Synapse()
+    > syn$login()
+    Welcome, Thomas Schaffter!
 
 <!-- Definitions -->
 
 [rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
+[Miniconda]: https://docs.conda.io/en/latest/miniconda.html
+[synapse]: https://www.synapse.org/
+[Synapse Python client]: https://pypi.org/project/synapseclient/
