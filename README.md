@@ -27,6 +27,7 @@ use a different username for better security. This is achieved by setting the
 environment variable `USER`
 
     docker run --rm -p 8787:8787 \
+        --name rstudio \
         -e USER=yourusername \
         -e PASSWORD=yourpassword \
         tschaffter/rstudio
@@ -46,6 +47,10 @@ below:
     $ id username
     uid=1000(abc) gid=1000(abc) groups=1000(abc)
 
+## Give the user root permissions
+
+Set the environment variable `ROOT=true` (default is `false`).
+
 ## Start RStudio with docker-compose
 
 This repository provides a `docker-compose.yml` to enable you to store your
@@ -64,6 +69,44 @@ Follow the logs using `docker logs`
     docker logs --follow rstudio
 
 Rotating log files are available in `/var/log/rstudio`.
+
+## Use Conda
+
+### From the terminal
+
+    1. Attach to the RStudio container
+
+        docker exec -it rstudio bash
+
+    2. List conda environments
+
+        conda env list
+
+    3. Activate an environment (e.g. `sage`)
+
+        conda activate sage
+
+> Note: Use `conda config --set auto_activate_base false` to prevent conda from
+automatically activating the default environment after logging in.
+
+### Using R
+
+
+
+
+
+
+
+> library(reticulate)
+> conda_list(conda = "auto")
+       name                              python
+1 miniconda           /opt/miniconda/bin/python
+2      sage /opt/miniconda/envs/sage/bin/python
+> use_condaenv("sage", conda = "auto", required = TRUE)
+> synapseclient <- reticulate::import('synapseclient')
+> syn <- synapseclient$Synapse()
+> syn$login()
+Welcome, Thomas Schaffter!
 
 <!-- Definitions -->
 

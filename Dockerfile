@@ -5,7 +5,8 @@ LABEL version="0.1.0"
 LABEL description="Base image for RStudio with conda support"
 
 ENV miniconda3_version="py38_4.8.3"
-ENV PATH="/opt/miniconda/bin:${PATH}"
+ENV MINICONDA_BIN_DIR="/opt/miniconda/bin"
+ENV PATH="${PATH}:${MINICONDA_BIN_DIR}"
 
 # Safer bash scripts with 'set -euxo pipefail'
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
@@ -54,7 +55,7 @@ RUN conda env create -f /tmp/conda/sage/sage.yaml \
 RUN cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /opt/miniconda/envs/sage/lib/libssl.so.1.1
 
 # Configure S6 init system
-RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-userconf
+RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
 COPY root /
 
 # Add sample project
