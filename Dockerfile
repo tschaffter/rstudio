@@ -36,7 +36,8 @@ RUN ln -s /usr/local/lib/R/lib/libR.so /lib/x86_64-linux-gnu/libR.so
 # - use Python/conda
 COPY renv.lock /tmp/renv.lock
 RUN install2.r --error renv \
-    && R -e "renv::restore(lockfile='/tmp/renv.lock')" \
+    && R -e "renv::consent(provided = TRUE)" \
+    && R -e "renv::restore(lockfile = '/tmp/renv.lock')" \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
 
 # Install miniconda
