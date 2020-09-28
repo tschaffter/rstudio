@@ -8,6 +8,11 @@
 
 Base image with RStudio and Conda.
 
+## Motivations
+
+- Provides a versionized development environment (R, Python)
+- Renders R notebooks to HTML and PDF programmatically (GH Action, etc.)
+
 ## Specification
 
 - Extends the Docker image [rocker/rstudio]
