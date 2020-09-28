@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   rstudio:
+    image: tschaffter/rstudio
     build:
       context: .
       dockerfile: Dockerfile
