@@ -11,17 +11,18 @@ Base image with RStudio and Conda.
 ## Specification
 
 - Extends the Docker image [rocker/rstudio]
+- Behaves the same as [rocker/rstudio] and offer extra features (see below)
 - Includes R packages to render HTML notebooks and use Python/conda (`reticulate`)
-- Can render HTML and PDF notebooks from .Rmd files
-- Includes [Miniconda]
-- Uses [GitHub Dependabot] to check Docker and pip dependencies
+- Renders HTML and PDF notebooks from .Rmd files programmatically
+- Comes with [Miniconda] installed
 - Specifies the version of the R packages installed using `renv`
+- Uses [GitHub Dependabot] to check Docker and pip dependencies
 
-## Usage
+## Starts RStudio
 
     docker run --rm -p 8787:8787 -e PASSWORD=yourpassword tschaffter/rstudio
 
-## Starts RStudio using docker-compose
+### Starts RStudio using docker-compose
 
 This repository provides a `docker-compose.yml` to enable you to store your
 configuration variables to file and start RStudio with a single command.
@@ -83,27 +84,30 @@ Rotating log files are available in `/var/log/rstudio`.
 
 ## Using Conda
 
+The image [rocker/rstudio] comes with Python2 and Python3 installed. Here we
+want to give the user the freedom to use any versions of Python and packages
+using conda environments. Conda environments, through the isolation of Python
+dependecies, also contribute to the reproducibility of experiements.
+
 ### From the terminal
 
-1. Attach to the RStudio container
+Attach to the RStudio container (here assuming that `rstudio` is the name of
+the container). For better safety, it is recommended to work as a non-root user.
+You can then list the environments available, activate an existing environment
+or create a new one.
 
-        docker exec -it rstudio bash
-
-2. List conda environments
-
-        conda env list
-
-3. Activate an environment (e.g. `sage`)
-
-        conda activate sage
+        host $ docker exec -it rstudio bash
+        container # su yourusername
+        container $ conda env list
+        container $ conda activate sage
 
 > Note: Use `conda config --set auto_activate_base false` to prevent conda from
 automatically activating the default environment after logging in.
 
 ### In R
 
-Run the following code in RStudio to activate the conda environment `sage` that
-comes pre-installed with this Docker image.
+The R code below lists the environment available before activating the existing
+environment named `sage`.
 
     > library(reticulate)
     > conda_list()
@@ -112,19 +116,23 @@ comes pre-installed with this Docker image.
     2      sage /opt/miniconda/envs/sage/bin/python
     > use_condaenv("sage", required = TRUE)
 
-If you have specified the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_API_KEY`, run the code below to import the [Synapse Python client] and
-login to Synapse.
+If the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_API_KEY` were set
+when the container started, you should be able to login to Synapse using the
+[Synapse Python client].
 
     > synapseclient <- reticulate::import('synapseclient')
     > syn <- synapseclient$Synapse()
     > syn$login()
-    Welcome, Thomas Schaffter!
+    Welcome, Max Caulfield!
 
-## Renders a notebook to HTML or PDF
+## Render an HTML and PDF notebook programmatically
 
-This Docker image includes a tool to generate HTML and PDF notebooks from
-*.Rmd* files. You can use the command below to render the notebook
-[notebooks/notebook.Rmd](notebooks/notebook.Rmd) to HTML.
+This Docker image can be used to generate HTML and PDF notebooks from *.Rmd*
+files programmatically. The command below mounts the folder `$(pwd)/notebooks`
+to the container and instructs the program to render the notebook
+[notebooks/notebook.Rmd](notebooks/notebook.Rmd) to HTML. The notebook generated
+is saved to the same directory as the input notebook and has the same name but
+with the extension `.nb.html`.
 
     docker run --rm \
         -v $(pwd)/notebooks:/data \
@@ -132,7 +140,7 @@ This Docker image includes a tool to generate HTML and PDF notebooks from
         tschaffter/rstudio \
         render
 
-Run this command to convert the notebook to PDF
+Run this command to convert the notebook to PDF (TBA)
 
     docker run --rm \
         -v $(pwd)/notebooks:/data \
