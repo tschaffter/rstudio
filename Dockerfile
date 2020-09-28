@@ -2,7 +2,7 @@ FROM rocker/rstudio:4.0.2
 
 LABEL maintainer="tschaffter@protonmail.com"
 LABEL version="0.1.0"
-LABEL description="Base image for RStudio with conda support"
+LABEL description="Base image with RStudio and Conda"
 
 ENV miniconda3_version="py38_4.8.3"
 ENV MINICONDA_BIN_DIR="/opt/miniconda/bin"
@@ -44,19 +44,16 @@ RUN curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_vers
     && chmod -R go-w /opt/miniconda \
     && conda --version
 
-# Copy conda env templates
+# Copy conda environment templates
 COPY conda /tmp/conda
 
 # Install conda env 'sage'
 RUN conda env create -f /tmp/conda/sage/sage.yaml \
-    && rm -fr /tmp/conda/sage
-
-# Fix libssl issue that affects conda env used with reticulate
-RUN cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /opt/miniconda/envs/sage/lib/libssl.so.1.1
+    && rm -fr /tmp/conda/sage \
+    # Fix libssl issue that affects conda env used with reticulate
+    && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 \
+        /opt/miniconda/envs/sage/lib/libssl.so.1.1
 
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
 COPY root /
-
-# Add sample project
-COPY project-sample /home/test/project
