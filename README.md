@@ -11,9 +11,7 @@ Base image with RStudio and Conda.
 ## Specification
 
 - Extends the Docker image [rocker/rstudio]
-- Includes R packages required to
-  - render HTML notebooks
-  - use Python/conda (`reticulate`)
+- Includes R packages to render HTML notebooks and use Python/conda (`reticulate`)
 - Includes [Miniconda]
 - [GitHub Dependabot] checks Docker and pip dependencies
 - Specifies the version of the R packages installed using `renv`
@@ -101,7 +99,7 @@ Rotating log files are available in `/var/log/rstudio`.
 > Note: Use `conda config --set auto_activate_base false` to prevent conda from
 automatically activating the default environment after logging in.
 
-### Using R
+### In R
 
 Run the following code in RStudio to activate the conda environment `sage` that
 comes pre-installed with this Docker image.
