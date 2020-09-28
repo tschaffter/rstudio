@@ -21,9 +21,15 @@ RUN apt-get update -qq -y \
         libxml2-dev \
         vim \
         zlib1g-dev \
+        # Fix https://github.com/tschaffter/rstudio/issues/11 (1/2)
+        libxtst6 \
+        libxt6 \
     && apt-get -y autoclean \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
+
+# Fix https://github.com/tschaffter/rstudio/issues/11 (2/2)
+RUN ln -s /usr/local/lib/R/lib/libR.so /lib/x86_64-linux-gnu/libR.so
 
 # Install R dependencies to
 # - render HTML notebooks
@@ -57,3 +63,5 @@ RUN conda env create -f /tmp/conda/sage/sage.yaml \
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
 COPY root /
+
+COPY notebook.Rmd /home/rstudio/.

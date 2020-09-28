@@ -12,13 +12,25 @@ Base image with RStudio and Conda.
 
 - Extends the Docker image [rocker/rstudio]
 - Includes R packages to render HTML notebooks and use Python/conda (`reticulate`)
+- Can render HTML and PDF notebooks from .Rmd files
 - Includes [Miniconda]
-- [GitHub Dependabot] checks Docker and pip dependencies
+- Uses [GitHub Dependabot] to check Docker and pip dependencies
 - Specifies the version of the R packages installed using `renv`
 
-## Quickstart
+## Usage
 
     docker run --rm -p 8787:8787 -e PASSWORD=yourpassword tschaffter/rstudio
+
+## Starts RStudio using docker-compose
+
+This repository provides a `docker-compose.yml` to enable you to store your
+configuration variables to file and start RStudio with a single command.
+
+1. Copy *.env.sample* to *.env*
+2. Update the variables in *.env*
+3. Start RStudio
+
+        docker-compose up -d
 
 ## Change the default username
 
@@ -60,17 +72,6 @@ variables are set, they will be used to create the configuration file
 This Docker image comes with [Miniconda] installed (see below) and a conda
 environment named `sage`. This environment provides the [Synapse Python client]
 that you can use to interact with the collaborative platform [Synapse].
-
-## Start RStudio with docker-compose
-
-This repository provides a `docker-compose.yml` to enable you to store your
-configuration variables to file and start RStudio with a single command.
-
-1. Copy *rstudio-variables.env.sample* to *rstudio-variables.env*
-2. Update the configuration in *rstudio-variables.env*
-3. Start RStudio
-
-        docker-compose up -d
 
 ## Access logs
 
@@ -118,6 +119,27 @@ login to Synapse.
     > syn <- synapseclient$Synapse()
     > syn$login()
     Welcome, Thomas Schaffter!
+
+## Renders a notebook to HTML or PDF
+
+This Docker image includes a tool to generate HTML and PDF notebooks from
+*.Rmd* files. You can use the command below to render the notebook
+[notebooks/notebook.Rmd](notebooks/notebook.Rmd) to HTML.
+
+    docker run --rm \
+        -v $(pwd)/notebooks:/data \
+        -e RENDER_INPUT="/data/notebook.Rmd" \
+        tschaffter/rstudio \
+        render
+
+Run this command to convert the notebook to PDF
+
+    docker run --rm \
+        -v $(pwd)/notebooks:/data \
+        -e RENDER_INPUT="/data/notebook.Rmd" \
+        -e RENDER_OUTPUT_FORMAT="pdf_document" \
+        tschaffter/rstudio \
+        render
 
 <!-- Definitions -->
 
