@@ -6,23 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: rstudio
-    environment:
-      # - USERID=1001
-      # - GROUPID=1001
-      - USER=test2
-      - PASSWORD
-      - SYN_USERNAME
-      - SYN_APIKEY
-      # - ROOT=FALSE
-      # - MINICONDA_VERSION=py38_4.8.3
+    env_file:
+      .env
     restart: always
     volumes:
       - data:/data
-      - home-persist:/home/${USER}/persist
-      # - /home/tschaffter/dev/rstudio/project-sample:/proj
     ports:
       - "8787:8787"
 
 volumes:
     data:
-    home-persist:

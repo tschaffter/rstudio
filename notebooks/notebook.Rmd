@@ -3,9 +3,9 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
 
 ```{r}
 plot(cars)
@@ -21,29 +21,3 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 library(reticulate)
 conda_list(conda = "auto")
 ```
-
-```{r}
-use_condaenv("sage", conda = "auto", required = TRUE)
-synapseclient <- reticulate::import('synapseclient')
-syn <- synapseclient$Synapse()
-
-Sys.getenv("PATH")
-
-syn$login(
-    email = Sys.getenv("SYN_USERNAME"), 
-    apiKey = Sys.getenv("SYN_API_KEY"), 
-    silent = FALSE)
-```
-
-```{python}
-import pandas
-
-a = 2
-```
-
-```{r}
-py$a
-```
-
-
-
