@@ -63,5 +63,3 @@ RUN conda env create -f /tmp/conda/sage/sage.yaml \
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
 COPY root /
-
-COPY notebook.Rmd /home/rstudio/.
