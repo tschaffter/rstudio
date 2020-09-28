@@ -36,7 +36,8 @@ RUN ln -s /usr/local/lib/R/lib/libR.so /lib/x86_64-linux-gnu/libR.so
 # - use Python/conda
 COPY renv.lock /tmp/renv.lock
 RUN install2.r --error renv \
-    && R -e "renv::restore(lockfile='/tmp/renv.lock')" \
+    && R -e "renv::consent(provided = TRUE)" \
+    && R -e "renv::restore(lockfile = '/tmp/renv.lock')" \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
 
 # Install miniconda
@@ -63,5 +64,3 @@ RUN conda env create -f /tmp/conda/sage/sage.yaml \
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
 COPY root /
-
-COPY notebook.Rmd /home/rstudio/.
