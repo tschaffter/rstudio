@@ -84,15 +84,15 @@ Rotating log files are available in `/var/log/rstudio`.
 
 ### From the terminal
 
-    1. Attach to the RStudio container
+1. Attach to the RStudio container
 
         docker exec -it rstudio bash
 
-    2. List conda environments
+2. List conda environments
 
         conda env list
 
-    3. Activate an environment (e.g. `sage`)
+3. Activate an environment (e.g. `sage`)
 
         conda activate sage
 
