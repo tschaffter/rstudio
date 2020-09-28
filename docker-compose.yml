@@ -11,11 +11,8 @@ services:
     restart: always
     volumes:
       - data:/data
-      - home-persist:/home/${USER}/persist
-      # - /home/tschaffter/dev/rstudio/project-sample:/proj
     ports:
       - "8787:8787"
 
 volumes:
     data:
-    home-persist:
