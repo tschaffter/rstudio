@@ -34,3 +34,5 @@ jobs:
         export $(grep -v '^#' .env | xargs -d '\n')
     - name: Validate docker-compose.yml
       run: docker-compose -f docker-compose.yml config >/dev/null
+    - name: Check R version
+      run: R --version

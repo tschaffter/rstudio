@@ -8,13 +8,15 @@
 
 Base image with RStudio and Conda.
 
-## Specifications
+## Specification
 
 - Extends the Docker image [rocker/rstudio]
 - Includes R packages required to
   - render HTML notebooks
   - use Python/conda (`reticulate`)
 - Includes [Miniconda]
+- [GitHub Dependabot] checks Docker and pip dependencies
+- Specifies the version of the R packages installed using `renv`
 
 ## Quickstart
 
@@ -125,3 +127,4 @@ login to Synapse.
 [Miniconda]: https://docs.conda.io/en/latest/miniconda.html
 [synapse]: https://www.synapse.org/
 [Synapse Python client]: https://pypi.org/project/synapseclient/
+[GitHub Dependabot]: https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/enabling-and-disabling-version-updates
