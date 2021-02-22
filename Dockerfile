@@ -1,4 +1,4 @@
-FROM rocker/rstudio:4.0.2
+FROM rocker/rstudio:4.0.4
 
 LABEL maintainer="tschaffter@protonmail.com"
 LABEL version="0.1.0"
