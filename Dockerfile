@@ -30,15 +30,6 @@ RUN apt-get update -qq -y \
 # Fix https://github.com/tschaffter/rstudio/issues/11 (2/2)
 RUN ln -s /usr/local/lib/R/lib/libR.so /lib/x86_64-linux-gnu/libR.so
 
-# Install R dependencies to
-# - render HTML notebooks
-# - use Python/conda
-COPY renv.lock /tmp/renv.lock
-RUN install2.r --error renv \
-    && R -e "renv::consent(provided = TRUE)" \
-    && R -e "renv::restore(lockfile = '/tmp/renv.lock')" \
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
-
 # Install miniconda
 RUN curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
     && bash Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
@@ -63,6 +54,15 @@ RUN conda init bash \
         /opt/miniconda/envs/${conda_env}/lib/libssl.so.1.1 \
     && conda activate base || true \
     && echo "conda activate ${conda_env}" >> ~/.bashrc
+
+# Install R dependencies to
+# - render HTML notebooks
+# - use Python/conda
+COPY renv.lock /tmp/renv.lock
+RUN install2.r --error renv \
+    && R -e "renv::consent(provided = TRUE)" \
+    && R -e "renv::restore(lockfile = '/tmp/renv.lock')" \
+    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
 
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf

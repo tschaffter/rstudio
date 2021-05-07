@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on:
   schedule:
@@ -10,6 +10,9 @@ on:
     tags:
       - '*.*.*'
   pull_request:
+
+env:
+  docker_repository: tschaffter/rstudio
 
 jobs:
   lint:
@@ -45,7 +48,7 @@ jobs:
     - name: Prepare
       id: prep
       run: |
-        DOCKER_IMAGE=tschaffter/rstudio
+        DOCKER_IMAGE=${{ env.docker_repository }}
         VERSION=noop
         PUSH=false
         if [ "${{ github.event_name }}" = "schedule" ]; then
@@ -100,3 +103,10 @@ jobs:
           org.opencontainers.image.version=${{ steps.prep.outputs.version }}
           org.opencontainers.image.revision=${{ github.sha }}
           org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
+    - name: Docker Hub Description
+      if: steps.prep.outputs.push == 'true'
+      uses: peter-evans/dockerhub-description@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        repository: ${{ env.docker_repository }}
