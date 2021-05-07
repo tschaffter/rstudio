@@ -1,9 +1,9 @@
 # RStudio
 
-[![GitHub Release](https://img.shields.io/github/release/tschaffter/rstudio.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/tschaffter/rstudio/releases)
-[![GitHub CI](https://img.shields.io/github/workflow/status/tschaffter/rstudio/CI.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/tschaffter/rstudio)
-[![GitHub License](https://img.shields.io/github/license/tschaffter/rstudio.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/tschaffter/rstudio/blob/main/LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/tschaffter/rstudio.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/tschaffter/rstudio)
+[![GitHub Release](https://img.shields.io/github/release/Sage-Bionetworks/rstudio.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/Sage-Bionetworks/rstudio/releases)
+[![GitHub CI](https://img.shields.io/github/workflow/status/Sage-Bionetworks/rstudio/CI.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/Sage-Bionetworks/rstudio)
+[![GitHub License](https://img.shields.io/github/license/Sage-Bionetworks/rstudio.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/Sage-Bionetworks/rstudio/blob/main/LICENSE)
+[![Docker Pulls](https://img.shields.io/docker/pulls/sagebionetworks/rstudio.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/sagebionetworks/rstudio)
 
 Docker image for analyses using RStudio and Python-Conda
 
@@ -219,4 +219,4 @@ Run this command to convert the notebook to PDF (TBA)
 [GitHub Dependabot]: https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/enabling-and-disabling-version-updates
 [semantic versioning]: https://semver.org/
 [rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
-[Apache License 2.0]: https://github.com/tschaffter/rstudio/blob/main/LICENSE
+[Apache License 2.0]: https://github.com/sagebionetworks/rstudio/blob/main/LICENSE
