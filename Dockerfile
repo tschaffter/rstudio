@@ -1,12 +1,11 @@
-FROM rocker/rstudio:4.0.2
+FROM rocker/rstudio:4.0.5
 
-LABEL maintainer="tschaffter@protonmail.com"
-LABEL version="0.1.0"
+LABEL maintainer="thomas.schaffter@protonmail.com"
 LABEL description="Base image with RStudio and Conda"
 
-ENV miniconda3_version="py38_4.8.3"
-ENV MINICONDA_BIN_DIR="/opt/miniconda/bin"
-ENV PATH="${PATH}:${MINICONDA_BIN_DIR}"
+ENV miniconda3_version="py38_4.9.2"
+ENV miniconda_bin_dir="/opt/miniconda/bin"
+ENV PATH="${PATH}:${miniconda_bin_dir}"
 
 # Safer bash scripts with 'set -euxo pipefail'
 SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
@@ -51,15 +50,19 @@ RUN curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_vers
     && chmod -R go-w /opt/miniconda \
     && conda --version
 
-# Copy conda environment templates
+# Copy conda environment definitions
 COPY conda /tmp/conda
 
-# Install conda env 'sage'
-RUN conda env create -f /tmp/conda/sage/sage.yaml \
-    && rm -fr /tmp/conda/sage \
+# Create conda env
+ARG conda_env="sage"
+RUN conda init bash \
+    && conda env create -f /tmp/conda/${conda_env}/${conda_env}.yaml \
+    && rm -fr /tmp/conda/${conda_env} \
     # Fix libssl issue that affects conda env used with reticulate
     && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 \
-        /opt/miniconda/envs/sage/lib/libssl.so.1.1
+        /opt/miniconda/envs/${conda_env}/lib/libssl.so.1.1 \
+    && conda activate base || true \
+    && echo "conda activate ${conda_env}" >> ~/.bashrc
 
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
