@@ -12,7 +12,7 @@ on:
   pull_request:
 
 env:
-  docker_repository: sage-bionetworks/rstudio
+  docker_repository: sagebionetworks/rstudio
 
 jobs:
   lint:
