@@ -4,15 +4,23 @@ updates:
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "weekly"
-    target-branch: "develop"
+      interval: "monthly"
+    target-branch: "main"
+    reviewers:
+      - "tschaffter"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    target-branch: "main"
     reviewers:
       - "tschaffter"
 
   - package-ecosystem: "pip"
     directory: "/conda/sage"
     schedule:
-      interval: "weekly"
-    target-branch: "develop"
+      interval: "monthly"
+    target-branch: "main"
     reviewers:
       - "tschaffter"

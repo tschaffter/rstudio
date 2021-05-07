@@ -2,7 +2,7 @@ name: sage
 channels:
   - defaults
 dependencies:
-  - python=3.8.5
-  - pip=20.2.2
+  - python=3.9.4
+  - pip=21.0.1
   - pip:
     - -r file:requirements.txt
