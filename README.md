@@ -22,7 +22,62 @@ Docker image for analyses in R and Python
 - Specifies the version of the R packages installed using `renv`
 - Uses [GitHub Dependabot] to check Docker and pip dependencies
 
-## Starts RStudio
+## Usage
+
+1. Create and edit the file that contains the future environment variables. You
+   can initially start RStudio using this configuration as-is.
+
+       cp .env.example .env
+
+2. Start RStudio. Add the option `-d` or `--detach` to run in the background.
+
+       docker-compose up
+
+RStudio is now available at http://localhost. On the login page, enter the
+default username (`rstudio`) and the password specified in `.env`.
+
+To stop the API service, enter `Ctrl+C` followed by `docker-compose down`.  If
+running in detached mode, you will only need to enter `docker-compose down`.
+
+## Versioning
+
+### GitHub tags
+
+This repository uses [semantic versioning] to track the releases of this
+project. This repository uses "non-moving" GitHub tags, that is, a tag will
+always point to the same git commit once it has been created.
+
+### Docker tags
+
+The artifact published by this repository is a Docker image. The versions of the
+image are aligned with the versions of [rocker/rstudio], not the versions of
+Stubby or the GitHub tags of this repository.
+
+The table below describes the image tags available.
+
+| Tag name                        | Moving | Description
+|---------------------------------|--------|------------
+| `latest`                        | Yes    | Latest stable release.
+| `edge`                          | Yes    | Lastest commit made to the default branch.
+| `<major>`                       | Yes    | Latest stable release for the getdns major version `<major>`.
+| `<major>.<minor>`               | Yes    | Latest stable release for the getdns version `<major>.<minor>`.
+| `<major>.<minor>.<patch>`       | Yes    | Latest stable release for the getdns version `<major>.<minor>.<patch>`.
+| `<major>.<minor>.<patch>-<sha>` | No     | Same as above but with the reference to the git commit.
+
+You should avoid using a moving tag like `latest` when deploying containers in
+production, because this makes it hard to track which version of the image is
+running and hard to roll back.
+
+## Contributing
+
+Thinking about contributing to this project? Get started by reading our
+[Contributor Guide](CONTRIBUTING.md).
+
+## License
+
+[Apache License 2.0]
+
+<!-- ## Starts RStudio
 
     docker run --rm -p 8787:8787 -e PASSWORD=yourpassword tschaffter/rstudio
 
@@ -151,12 +206,16 @@ Run this command to convert the notebook to PDF (TBA)
         -e RENDER_INPUT="/data/notebook.Rmd" \
         -e RENDER_OUTPUT_FORMAT="pdf_document" \
         tschaffter/rstudio \
-        render
+        render -->
 
-<!-- Definitions -->
+
+
+<!-- Links -->
 
 [rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
 [Miniconda]: https://docs.conda.io/en/latest/miniconda.html
 [synapse]: https://www.synapse.org/
 [Synapse Python client]: https://pypi.org/project/synapseclient/
 [GitHub Dependabot]: https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/enabling-and-disabling-version-updates
+[semantic versioning]: https://semver.org/
+[rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
