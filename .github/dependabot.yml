@@ -4,7 +4,7 @@ updates:
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     target-branch: "develop"
     reviewers:
       - "tschaffter"
@@ -12,7 +12,7 @@ updates:
   - package-ecosystem: "pip"
     directory: "/conda/sage"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     target-branch: "develop"
     reviewers:
       - "tschaffter"
