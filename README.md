@@ -219,3 +219,4 @@ Run this command to convert the notebook to PDF (TBA)
 [GitHub Dependabot]: https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/enabling-and-disabling-version-updates
 [semantic versioning]: https://semver.org/
 [rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
+[Apache License 2.0]: https://github.com/tschaffter/rstudio/blob/main/LICENSE
