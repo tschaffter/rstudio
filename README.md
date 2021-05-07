@@ -59,9 +59,9 @@ The table below describes the image tags available.
 |---------------------------------|--------|------------
 | `latest`                        | Yes    | Latest stable release.
 | `edge`                          | Yes    | Lastest commit made to the default branch.
-| `<major>`                       | Yes    | Latest stable release for the getdns major version `<major>`.
-| `<major>.<minor>`               | Yes    | Latest stable release for the getdns version `<major>.<minor>`.
-| `<major>.<minor>.<patch>`       | Yes    | Latest stable release for the getdns version `<major>.<minor>.<patch>`.
+| `<major>`                       | Yes    | Latest stable release for RStudio version `<major>`.
+| `<major>.<minor>`               | Yes    | Latest stable release for RStudio version `<major>.<minor>`.
+| `<major>.<minor>.<patch>`       | Yes    | Latest stable release for RStudio version `<major>.<minor>.<patch>`.
 | `<major>.<minor>.<patch>-<sha>` | No     | Same as above but with the reference to the git commit.
 
 You should avoid using a moving tag like `latest` when deploying containers in
