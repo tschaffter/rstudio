@@ -51,14 +51,12 @@ RUN conda init bash \
     && conda activate base || true \
     && echo "conda activate sage" >> ~/.bashrc
 
-# # Install R dependencies to
-# # - render HTML notebooks
-# # - use Python/conda
-# # COPY renv.lock /tmp/renv.lock
-# # RUN install2.r --error renv \
-# #     && R -e "renv::consent(provided = TRUE)" \
-# #     && R -e "renv::restore(lockfile = '/tmp/renv.lock')" \
-# #     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
+# Install R dependencies
+COPY renv.lock /tmp/renv.lock
+RUN install2.r --error renv \
+    && R -e "renv::consent(provided = TRUE)" \
+    && R -e "renv::restore(lockfile = '/tmp/renv.lock')" \
+    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
 
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
