@@ -65,9 +65,9 @@ Set the environment variable `ROOT=true` (default is `false`).
 
 ## Setting Synapse credentials
 
-Set the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_TOKEN`. If both
-variables are set, they will be used to create the configuration file
-`~/.synapseConfig` when the container starts.
+Set the environment variables `SYNAPSE_TOKEN` to the value of one of your
+Synapse Personal Access Tokens. If this variable is set, it will be used to
+create the configuration file `~/.synapseConfig` when the container starts.
 
 ## Using Conda
 
@@ -75,6 +75,62 @@ This Docker image comes with [Miniconda] installed (see below) and an example
 Conda environment named `sage-bionetworks`. This environment provides the
 [Synapse Python client] that you can use to interact with the collaborative
 platform [Synapse] developed by [Sage Bionetworks].
+
+### From the terminal
+
+Attach to the RStudio container (here assuming that `rstudio` is the name of
+the container). For better safety, it is recommended to work as a non-root user.
+You can then list the environments available, activate an existing environment
+or create a new one.
+
+        host $ docker exec -it rstudio bash
+        container # su yourusername
+        container $ conda env list
+        container $ conda activate sage-bionetworks
+
+### From RStudio
+
+The R code below lists the environment available before activating the existing
+environment named `sage`.
+
+    > library(reticulate)
+    > conda_list()
+        name                              python
+    1 miniconda           /opt/miniconda/bin/python
+    2      sage /opt/miniconda/envs/sage/bin/python
+    > use_condaenv("sage", required = TRUE)
+
+If the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_API_KEY` were set
+when the container started, you should be able to login to Synapse using the
+[Synapse Python client].
+
+    > synapseclient <- reticulate::import('synapseclient')
+    > syn <- synapseclient$Synapse()
+    > syn$login()
+    Welcome, Max Caulfield!
+
+## Rendering a notebook programmatically to HTML and PDF
+
+This Docker image provides the command `render` that generates an HTML or PDF
+notebook from an R notebook (*.Rmd*). Run the command below from the host to
+mount the directory `$(pwd)/notebooks` where the R notebook is and generate the
+HTML notebook that will be saved to the same directory with the extension
+`.nb.html`.
+
+    docker run --rm \
+        -v $(pwd)/notebooks:/data \
+        -e RENDER_INPUT="/data/example.Rmd" \
+        tschaffter/rstudio \
+        render
+
+Similarly, run this command to convert the notebook to PDF.
+
+    docker run --rm \
+        -v $(pwd)/notebooks:/data \
+        -e RENDER_INPUT="/data/example.Rmd" \
+        -e RENDER_OUTPUT_FORMAT="pdf_document" \
+        tschaffter/rstudio \
+        render
 
 ## Versioning
 
@@ -120,70 +176,11 @@ Thinking about contributing to this project? Get started by reading our
 
 
 
-The image [rocker/rstudio] comes with Python2 and Python3 installed. Here we
-want to give the user the freedom to use any versions of Python and packages
-using conda environments. Conda environments, through the isolation of Python
-dependecies, also contribute to the reproducibility of experiements.
 
-### From the terminal
 
-Attach to the RStudio container (here assuming that `rstudio` is the name of
-the container). For better safety, it is recommended to work as a non-root user.
-You can then list the environments available, activate an existing environment
-or create a new one.
 
-        host $ docker exec -it rstudio bash
-        container # su yourusername
-        container $ conda env list
-        container $ conda activate sage
 
-> Note: Use `conda config --set auto_activate_base false` to prevent conda from
-automatically activating the default environment after logging in.
-
-### In R
-
-The R code below lists the environment available before activating the existing
-environment named `sage`.
-
-    > library(reticulate)
-    > conda_list()
-        name                              python
-    1 miniconda           /opt/miniconda/bin/python
-    2      sage /opt/miniconda/envs/sage/bin/python
-    > use_condaenv("sage", required = TRUE)
-
-If the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_API_KEY` were set
-when the container started, you should be able to login to Synapse using the
-[Synapse Python client].
-
-    > synapseclient <- reticulate::import('synapseclient')
-    > syn <- synapseclient$Synapse()
-    > syn$login()
-    Welcome, Max Caulfield!
-
-## Render an HTML and PDF notebook programmatically
-
-This Docker image can be used to generate HTML and PDF notebooks from *.Rmd*
-files programmatically. The command below mounts the folder `$(pwd)/notebooks`
-to the container and instructs the program to render the notebook
-[notebooks/notebook.Rmd](notebooks/notebook.Rmd) to HTML. The notebook generated
-is saved to the same directory as the input notebook and has the same name but
-with the extension `.nb.html`.
-
-    docker run --rm \
-        -v $(pwd)/notebooks:/data \
-        -e RENDER_INPUT="/data/notebook.Rmd" \
-        tschaffter/rstudio \
-        render
-
-Run this command to convert the notebook to PDF (TBA)
-
-    docker run --rm \
-        -v $(pwd)/notebooks:/data \
-        -e RENDER_INPUT="/data/notebook.Rmd" \
-        -e RENDER_OUTPUT_FORMAT="pdf_document" \
-        tschaffter/rstudio \
-        render -->
+ -->
 
 
 
