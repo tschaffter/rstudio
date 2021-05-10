@@ -39,6 +39,43 @@ default username (`rstudio`) and the password specified in `.env`.
 To stop the API service, enter `Ctrl+C` followed by `docker-compose down`.  If
 running in detached mode, you will only need to enter `docker-compose down`.
 
+## Accessing logs
+
+Follow the logs using `docker logs`
+
+    docker logs --follow rstudio
+
+Rotating log files are available in `/var/log/rstudio`.
+
+## Setting user / group identifiers
+
+When using Docker volumes, permissions issues can arise between the host OS and
+the container. You can avoid these issues by letting RStudio know the User ID
+(UID) and Group ID (GID) it should use when creating and editting files so that
+these IDs match yours, which you can get using the command `id`:
+
+    $ id
+    uid=1000(archer) gid=1000(archer) groups=1000(archer)
+
+In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
+
+## Giving the user root permissions
+
+Set the environment variable `ROOT=true` (default is `false`).
+
+## Setting Synapse credentials
+
+Set the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_TOKEN`. If both
+variables are set, they will be used to create the configuration file
+`~/.synapseConfig` when the container starts.
+
+## Using Conda
+
+This Docker image comes with [Miniconda] installed (see below) and an example
+Conda environment named `sage-bionetworks`. This environment provides the
+[Synapse Python client] that you can use to interact with the collaborative
+platform [Synapse] developed by [Sage Bionetworks].
+
 ## Versioning
 
 ### GitHub tags
@@ -77,71 +114,11 @@ Thinking about contributing to this project? Get started by reading our
 
 [Apache License 2.0]
 
-<!-- ## Starts RStudio
+<!--
 
-    docker run --rm -p 8787:8787 -e PASSWORD=yourpassword tschaffter/rstudio
 
-### Starts RStudio using docker-compose
 
-This repository provides a `docker-compose.yml` to enable you to store your
-configuration variables to file and start RStudio with a single command.
 
-1. Copy *.env.example* to *.env*
-2. Update the variables in *.env*
-3. Start RStudio
-
-        docker-compose up -d
-
-## Change the default username
-
-The default username set by [rocker/rstudio] is `rstudio`. It is recommended to
-use a different username for better security. This is achieved by setting the
-environment variable `USER`
-
-    docker run --rm -p 8787:8787 \
-        --name rstudio \
-        -e USER=yourusername \
-        -e PASSWORD=yourpassword \
-        tschaffter/rstudio
-
-## Set user / group identifiers
-
-When using volumes (`-v` flags) permissions issues can arise between the host OS
-and the container, [rocker/rstudio] avoid this issue by allowing you to specify
-the user `USERID` and group `GROUPID`.
-
-Ensure any volume directories on the host are owned by the same user you specify
-and any permissions issues will vanish like magic.
-
-In this instance `USERID=1000` and `GROUPID=1000`, to find yours use id user as
-below:
-
-    $ id username
-    uid=1000(abc) gid=1000(abc) groups=1000(abc)
-
-## Give the user root permissions
-
-Set the environment variable `ROOT=true` (default is `false`).
-
-## Set Synapse credentials
-
-Set the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_API_KEY`. If both
-variables are set, they will be used to create the configuration file
-`~/.synapseConfig`.
-
-This Docker image comes with [Miniconda] installed (see below) and a conda
-environment named `sage`. This environment provides the [Synapse Python client]
-that you can use to interact with the collaborative platform [Synapse].
-
-## Access logs
-
-Follow the logs using `docker logs`
-
-    docker logs --follow rstudio
-
-Rotating log files are available in `/var/log/rstudio`.
-
-## Using Conda
 
 The image [rocker/rstudio] comes with Python2 and Python3 installed. Here we
 want to give the user the freedom to use any versions of Python and packages
@@ -220,3 +197,4 @@ Run this command to convert the notebook to PDF (TBA)
 [semantic versioning]: https://semver.org/
 [rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
 [Apache License 2.0]: https://github.com/tschaffter/rstudio/blob/main/LICENSE
+[Sage Bionetworks]: https://sagebionetworks.org
