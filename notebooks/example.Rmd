@@ -6,8 +6,10 @@ output:
   html_document:
     df_print: paged
     code_fold: hide
-    toc: true
-    toc_float: true
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
 ---
 
 # Test

@@ -61,7 +61,7 @@ In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
 
 ## Giving the user root permissions
 
-Set the environment variable `ROOT=true` (default is `false`).
+Set the environment variable `ROOT=TRUE` (default is `FALSE`).
 
 ## Setting Synapse credentials
 
@@ -72,9 +72,9 @@ create the configuration file `~/.synapseConfig` when the container starts.
 ## Using Conda
 
 This Docker image comes with [Miniconda] installed (see below) and an example
-Conda environment named `sage-bionetworks`. This environment provides the
-[Synapse Python client] that you can use to interact with the collaborative
-platform [Synapse] developed by [Sage Bionetworks].
+Conda environment named `sage-bionetworks`. This environment includes packages
+used to interact with the collaborative platform [Synapse] developed by [Sage
+Bionetworks].
 
 ### From the terminal
 
@@ -91,23 +91,14 @@ or create a new one.
 ### From RStudio
 
 The R code below lists the environment available before activating the existing
-environment named `sage`.
+environment named `sage-bionetworks`.
 
     > library(reticulate)
     > conda_list()
         name                              python
     1 miniconda           /opt/miniconda/bin/python
-    2      sage /opt/miniconda/envs/sage/bin/python
-    > use_condaenv("sage", required = TRUE)
-
-If the environment variables `SYNAPSE_USERNAME` and `SYNAPSE_API_KEY` were set
-when the container started, you should be able to login to Synapse using the
-[Synapse Python client].
-
-    > synapseclient <- reticulate::import('synapseclient')
-    > syn <- synapseclient$Synapse()
-    > syn$login()
-    Welcome, Max Caulfield!
+    2      sage-bionetworks /opt/miniconda/envs/sage/bin/python
+    > use_condaenv("sage-bionetworks", required = TRUE)
 
 ## Rendering a notebook programmatically to HTML and PDF
 
@@ -120,15 +111,6 @@ HTML notebook that will be saved to the same directory with the extension
     docker run --rm \
         -v $(pwd)/notebooks:/data \
         -e RENDER_INPUT="/data/example.Rmd" \
-        tschaffter/rstudio \
-        render
-
-Similarly, run this command to convert the notebook to PDF.
-
-    docker run --rm \
-        -v $(pwd)/notebooks:/data \
-        -e RENDER_INPUT="/data/example.Rmd" \
-        -e RENDER_OUTPUT_FORMAT="pdf_document" \
         tschaffter/rstudio \
         render
 
@@ -152,9 +134,9 @@ The table below describes the image tags available.
 |---------------------------------|--------|------------
 | `latest`                        | Yes    | Latest stable release.
 | `edge`                          | Yes    | Lastest commit made to the default branch.
-| `<major>`                       | Yes    | Latest stable release for RStudio version `<major>`.
-| `<major>.<minor>`               | Yes    | Latest stable release for RStudio version `<major>.<minor>`.
-| `<major>.<minor>.<patch>`       | Yes    | Latest stable release for RStudio version `<major>.<minor>.<patch>`.
+| `<major>`                       | Yes    | Latest stable major release `<major>`.
+| `<major>.<minor>`               | Yes    | Latest stable minor release `<major>.<minor>`.
+| `<major>.<minor>.<patch>`       | Yes    | Latest stable patch release `<major>.<minor>.<patch>`.
 | `<major>.<minor>.<patch>-<sha>` | No     | Same as above but with the reference to the git commit.
 
 You should avoid using a moving tag like `latest` when deploying containers in
@@ -171,18 +153,15 @@ Thinking about contributing to this project? Get started by reading our
 [Apache License 2.0]
 
 <!--
+Similarly, run this command to convert the notebook to PDF.
 
-
-
-
-
-
-
-
-
+    docker run --rm \
+        -v $(pwd)/notebooks:/data \
+        -e RENDER_INPUT="/data/example.Rmd" \
+        -e RENDER_OUTPUT_FORMAT="pdf_document" \
+        tschaffter/rstudio \
+        render
  -->
-
-
 
 <!-- Links -->
 
