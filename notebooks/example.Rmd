@@ -28,7 +28,45 @@ When you save the notebook, an HTML file containing the code and output will be 
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
+# List and activate Conda environments
+
+List the Conda environments
+
 ```{r}
 library(reticulate)
 conda_list(conda = "auto")
 ```
+
+Activate the environment `sage-bionetworks`:
+
+```{r}
+use_condaenv("sage-bionetworks", required = TRUE)
+```
+
+# Use R and Python
+
+Define a variable in R:
+
+```{r}
+a <- 1
+```
+
+Access R objects in Python code blocks using the prefix `r.`:
+
+```{python}
+r.a += 1
+b = 'hello-world'
+```
+
+Resume working with the variable `a` in R:
+
+```{r}
+a
+```
+
+Access Python objects in R code blocks using the prefix `py$`:
+
+```{r}
+py$b
+```
+

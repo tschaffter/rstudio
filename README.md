@@ -7,25 +7,18 @@
 
 Docker image for analyses using RStudio and Python-Conda
 
-## Motivations
+## Overview
 
-- Provides a versionized development environment (R, Python)
-- Renders R notebooks to HTML and PDF programmatically (GH Action, etc.)
+This project provides
 
-## Specification
-
-- Extends the Docker image [rocker/rstudio]
-- Behaves the same as [rocker/rstudio] and offer extra features (see below)
-- Includes R packages to render HTML notebooks and use Python/conda (`reticulate`)
-- Renders HTML and PDF notebooks from .Rmd files programmatically
-- Comes with [Miniconda] installed
-- Specifies the version of the R packages installed using `renv`
-- Uses [GitHub Dependabot] to check Docker and pip dependencies
+- a development environment where R and Python codes work together
+- a portable development environment using Docker
+- a versionized development environment
 
 ## Usage
 
-1. Create and edit the file that contains the future environment variables. You
-   can initially start RStudio using this configuration as-is.
+1. Create and edit the file that contains the environment variables. You can
+   initially start RStudio using this configuration as-is.
 
        cp .env.example .env
 
@@ -36,8 +29,8 @@ Docker image for analyses using RStudio and Python-Conda
 RStudio is now available at http://localhost. On the login page, enter the
 default username (`rstudio`) and the password specified in `.env`.
 
-To stop the API service, enter `Ctrl+C` followed by `docker-compose down`.  If
-running in detached mode, you will only need to enter `docker-compose down`.
+To stop RStudio, enter `Ctrl+C` followed by `docker-compose down`.  If running
+in detached mode, you will only need to enter `docker-compose down`.
 
 ## Accessing logs
 
@@ -100,7 +93,7 @@ environment named `sage-bionetworks`.
     2      sage-bionetworks /opt/miniconda/envs/sage/bin/python
     > use_condaenv("sage-bionetworks", required = TRUE)
 
-## Rendering a notebook programmatically to HTML and PDF
+## Rendering an HTML notebook using a CLI
 
 This Docker image provides the command `render` that generates an HTML or PDF
 notebook from an R notebook (*.Rmd*). Run the command below from the host to
@@ -120,13 +113,14 @@ HTML notebook that will be saved to the same directory with the extension
 
 This repository uses [semantic versioning] to track the releases of this
 project. This repository uses "non-moving" GitHub tags, that is, a tag will
-always point to the same git commit once it has been created.
+always point to the same git commit once it has been created. The tags of the
+GitHub releases are available [here](https://github.com/tschaffter/rstudio/releases).
 
 ### Docker tags
 
-The artifact published by this repository is a Docker image. The versions of the
-image are aligned with the versions of [rocker/rstudio], not the versions of
-Stubby or the GitHub tags of this repository.
+The artifact published by this repository is the Docker image
+[tschaffter/rstudio]. The versions of the image are aligned with the versions of
+[rocker/rstudio], not the GitHub tags of this repository.
 
 The table below describes the image tags available.
 
@@ -174,3 +168,5 @@ Similarly, run this command to convert the notebook to PDF.
 [rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
 [Apache License 2.0]: https://github.com/tschaffter/rstudio/blob/main/LICENSE
 [Sage Bionetworks]: https://sagebionetworks.org
+[reticulate]: https://rstudio.github.io/reticulate
+[tschaffter/rstudio]: https://hub.docker.com/repository/docker/tschaffter/rstudio
