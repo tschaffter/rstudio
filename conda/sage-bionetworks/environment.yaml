@@ -1,4 +1,4 @@
-name: sage
+name: sage-bionetworks
 channels:
   - defaults
 dependencies:

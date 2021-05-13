@@ -43,7 +43,7 @@ RUN curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_vers
 # Create conda environments
 COPY conda /tmp/conda
 RUN conda init bash \
-    && conda env create -f /tmp/conda/sage/environment.yaml \
+    && conda env create -f /tmp/conda/sage-bionetworks/environment.yaml \
     && rm -fr /tmp/conda \
     # Fix libssl issue that affects conda env used with reticulate
     && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 \
