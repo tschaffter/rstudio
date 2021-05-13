@@ -6,21 +6,15 @@ updates:
     schedule:
       interval: "monthly"
     target-branch: "main"
-    reviewers:
-      - "tschaffter"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
     target-branch: "main"
-    reviewers:
-      - "tschaffter"
 
   - package-ecosystem: "pip"
     directory: "/conda/sage"
     schedule:
       interval: "monthly"
     target-branch: "main"
-    reviewers:
-      - "tschaffter"
