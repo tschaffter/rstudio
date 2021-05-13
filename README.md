@@ -113,8 +113,7 @@ HTML notebook that will be saved to the same directory with the extension
 
 This repository uses [semantic versioning] to track the releases of this
 project. This repository uses "non-moving" GitHub tags, that is, a tag will
-always point to the same git commit once it has been created. The tags of the
-GitHub releases are available [here](https://github.com/tschaffter/rstudio/releases).
+always point to the same git commit once it has been created.
 
 ### Docker tags
 
@@ -128,9 +127,9 @@ The table below describes the image tags available.
 |---------------------------------|--------|------------
 | `latest`                        | Yes    | Latest stable release.
 | `edge`                          | Yes    | Lastest commit made to the default branch.
-| `<major>`                       | Yes    | Latest stable major release `<major>`.
-| `<major>.<minor>`               | Yes    | Latest stable minor release `<major>.<minor>`.
-| `<major>.<minor>.<patch>`       | Yes    | Latest stable patch release `<major>.<minor>.<patch>`.
+| `<major>`                       | Yes    | Latest stable major release of RStudio.
+| `<major>.<minor>`               | Yes    | Latest stable minor release of RStudio.
+| `<major>.<minor>.<patch>`       | Yes    | Latest stable patch release of RStudio.
 | `<major>.<minor>.<patch>-<sha>` | No     | Same as above but with the reference to the git commit.
 
 You should avoid using a moving tag like `latest` when deploying containers in
