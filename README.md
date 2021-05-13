@@ -48,7 +48,7 @@ the container. You can avoid these issues by letting RStudio know the User ID
 these IDs match yours, which you can get using the command `id`:
 
     $ id
-    uid=1000(archer) gid=1000(archer) groups=1000(archer)
+    uid=1000(kelsey) gid=1000(kelsey) groups=1000(kelsey)
 
 In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
 
