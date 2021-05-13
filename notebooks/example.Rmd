@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output:
   html_document:
     df_print: paged
-    code_fold: hide
+    code_fold: show
     toc: yes
     toc_float: yes
   pdf_document:
@@ -28,45 +28,46 @@ When you save the notebook, an HTML file containing the code and output will be 
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
-# List and activate Conda environments
+# Conda environments
 
-List the Conda environments
+List the Conda environments.
 
 ```{r}
 library(reticulate)
+options(reticulate.repl.quiet = TRUE)
+
 conda_list(conda = "auto")
 ```
 
-Activate the environment `sage-bionetworks`:
+Activate the environment `sage-bionetworks`.
 
 ```{r}
 use_condaenv("sage-bionetworks", required = TRUE)
 ```
 
-# Use R and Python
+# Combining R and Python
 
-Define a variable in R:
+Define a variable in R.
 
 ```{r}
-a <- 1
+counter <- 1
 ```
 
-Access R objects in Python code blocks using the prefix `r.`:
+Access R objects in Python code blocks using the prefix `r.`.
 
 ```{python}
-r.a += 1
-b = 'hello-world'
+r.counter += 1
+message = 'hello-world'
 ```
 
-Resume working with the variable `a` in R:
+Resume working with the variable `a` in R.
 
 ```{r}
-a
+counter
 ```
 
-Access Python objects in R code blocks using the prefix `py$`:
+Access Python objects in R code blocks using the prefix `py$`.
 
 ```{r}
-py$b
+py$message
 ```
-
