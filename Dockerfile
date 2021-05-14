@@ -3,7 +3,7 @@ FROM rocker/rstudio:4.0.5
 LABEL maintainer="thomas.schaffter@protonmail.com"
 LABEL description="Base image with RStudio and Conda"
 
-ENV miniconda3_version="py38_4.9.2"
+ENV miniconda3_version="py39_4.9.2"
 ENV miniconda_bin_dir="/opt/miniconda/bin"
 ENV PATH="${PATH}:${miniconda_bin_dir}"
 
@@ -15,22 +15,20 @@ RUN apt-get update -qq -y \
     && apt-get install --no-install-recommends -qq -y \
         bash-completion \
         curl \
-        # htop \
         libxml2-dev \
-        # vim \
         zlib1g-dev \
         # Fix https://github.com/tschaffter/rstudio/issues/11 (1/2)
         libxtst6 \
         libxt6 \
     && apt-get -y autoclean \
     && apt-get -y autoremove \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
 
-# Fix https://github.com/tschaffter/rstudio/issues/11 (2/2)
-RUN ln -s /usr/local/lib/R/lib/libR.so /lib/x86_64-linux-gnu/libR.so
+    # Fix https://github.com/tschaffter/rstudio/issues/11 (2/2)
+    && ln -s /usr/local/lib/R/lib/libR.so /lib/x86_64-linux-gnu/libR.so \
 
-# Install miniconda
-RUN curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+    # Install miniconda
+    && curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
     && bash Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
         -b \
         -p /opt/miniconda \
@@ -49,7 +47,7 @@ RUN conda init bash \
     && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 \
         /opt/miniconda/envs/sage/lib/libssl.so.1.1 \
     && conda activate base || true \
-    && echo "conda activate sage" >> ~/.bashrc
+    && echo "conda activate sage-bionetworks" >> ~/.bashrc
 
 # Install R dependencies
 COPY renv.lock /tmp/renv.lock

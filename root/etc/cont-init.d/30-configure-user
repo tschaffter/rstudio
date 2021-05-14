@@ -5,6 +5,9 @@ set -euo pipefail
 SYNAPSE_CONFIG_FILENAME="/home/${USER}/.synapseConfig"
 BASHRC_FILENAME="/home/${USER}/.bashrc"
 
+# Allow the user to update R libraries install by root in Dockerfile
+chown -R ${USER}:staff /usr/local/lib/R
+
 # Change the shell of the user to bash
 usermod --shell /bin/bash ${USER}
 

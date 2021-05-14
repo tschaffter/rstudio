@@ -44,7 +44,9 @@ in detached mode, you will only need to enter `docker-compose down`.
 
 Follow the logs using `docker logs`
 
-    docker logs --follow rstudio
+```console
+docker logs --follow rstudio
+```
 
 Rotating log files are available in `/var/log/rstudio`.
 
@@ -62,22 +64,26 @@ the container). For better safety, it is recommended to work as a non-root user.
 You can then list the environments available, activate an existing environment
 or create a new one.
 
-        host $ docker exec -it rstudio bash
-        container # su yourusername
-        container $ conda env list
-        container $ conda activate sage-bionetworks
+```console
+$ docker exec -it rstudio bash
+container # su yourusername
+container $ conda env list
+container $ conda activate sage-bionetworks
+```
 
 ### From RStudio
 
 The R code below lists the environment available before activating the existing
 environment named `sage-bionetworks`.
 
-    > library(reticulate)
-    > conda_list()
-        name                              python
-    1 miniconda           /opt/miniconda/bin/python
-    2      sage-bionetworks /opt/miniconda/envs/sage/bin/python
-    > use_condaenv("sage-bionetworks", required = TRUE)
+```console
+> library(reticulate)
+> conda_list()
+    name                              python
+1 miniconda           /opt/miniconda/bin/python
+2      sage-bionetworks /opt/miniconda/envs/sage/bin/python
+> use_condaenv("sage-bionetworks", required = TRUE)
+```
 
 ## Setting user / group identifiers
 
@@ -86,8 +92,10 @@ the container. You can avoid these issues by letting RStudio know the User ID
 (UID) and Group ID (GID) it should use when creating and editting files so that
 these IDs match yours, which you can get using the command `id`:
 
-    $ id
-    uid=1000(kelsey) gid=1000(kelsey) groups=1000(kelsey)
+```console
+$ id
+uid=1000(kelsey) gid=1000(kelsey) groups=1000(kelsey)
+```
 
 In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
 
@@ -109,11 +117,13 @@ mount the directory `$(pwd)/notebooks` where the R notebook is and generate the
 HTML notebook that will be saved to the same directory with the extension
 `.nb.html`.
 
-    docker run --rm \
-        -v $(pwd)/notebooks:/data \
-        -e RENDER_INPUT="/data/example.Rmd" \
-        tschaffter/rstudio \
-        render
+```console
+docker run --rm \
+    -v $(pwd)/notebooks:/data \
+    -e RENDER_INPUT="/data/example.Rmd" \
+    tschaffter/rstudio \
+    render
+```
 
 ## Versioning
 

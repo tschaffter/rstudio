@@ -1,0 +1,57 @@
+---
+title: "Combining R and Python"
+author: "Thomas Schaffter"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    code_fold: show
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+# Conda environments
+
+List the Conda environments.
+
+```{r}
+library(reticulate)
+options(reticulate.repl.quiet = TRUE)
+
+conda_list(conda = "auto")
+```
+
+Activate the environment `sage-bionetworks`.
+
+```{r}
+use_condaenv("sage-bionetworks", required = TRUE)
+```
+
+# Combining R and Python
+
+Define a variable in R.
+
+```{r}
+counter <- 1
+```
+
+Access R objects in Python code blocks using the prefix `r.`.
+
+```{python}
+r.counter += 1
+message = 'hello-world'
+```
+
+Resume working with the variable `a` in R.
+
+```{r}
+counter
+```
+
+Access Python objects in R code blocks using the prefix `py$`.
+
+```{r}
+py$message
+```
