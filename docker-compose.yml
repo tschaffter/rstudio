@@ -13,8 +13,7 @@ services:
       - USERID=${RSTUDIO_USERID}
       - GROUPID=${RSTUDIO_GROUPID}
       - ROOT=${RSTUDIO_ROOT}
-      - SYNAPSE_USERNAME
-      - SYNAPSE_API_KEY
+      - SYNAPSE_TOKEN
     volumes:
       - .:/home/rstudio/awesome-project:rw
     ports:

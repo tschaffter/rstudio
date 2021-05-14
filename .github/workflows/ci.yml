@@ -26,7 +26,7 @@ jobs:
         args: Dockerfile
     - name: Check that packages in requirements.txt files are in asc order
       run: |
-        sort -f --check conda/sage/requirements.txt
+        sort -f --check conda/sage-bionetworks/requirements.txt
 
   test:
     needs: [lint]

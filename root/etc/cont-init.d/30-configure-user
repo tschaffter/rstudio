@@ -5,16 +5,18 @@ set -euo pipefail
 SYNAPSE_CONFIG_FILENAME="/home/${USER}/.synapseConfig"
 BASHRC_FILENAME="/home/${USER}/.bashrc"
 
+# Allow the user to update R libraries install by root in Dockerfile
+# chown -R ${USER}:staff /usr/local/lib/R  # Why does RStudio try to update these packages?
+
 # Change the shell of the user to bash
 usermod --shell /bin/bash ${USER}
 
 # Create Synapse Python client configuration file
-if [[ ! -z ${SYNAPSE_USERNAME} && ! -z ${SYNAPSE_API_KEY} ]]; then
+if [[ ! -z ${SYNAPSE_TOKEN} ]]; then
     if [ ! -f ${SYNAPSE_CONFIG_FILENAME} ]; then
         printf "%s\n" \
             "[authentication]" \
-            "username = ${SYNAPSE_USERNAME}" \
-            "apikey = ${SYNAPSE_API_KEY}" | tee -a ${SYNAPSE_CONFIG_FILENAME} >/dev/null
+            "authtoken=${SYNAPSE_TOKEN}" | tee -a ${SYNAPSE_CONFIG_FILENAME} >/dev/null
 
         chown "${USER}:${USER}" ${SYNAPSE_CONFIG_FILENAME}
         chmod 600 ${SYNAPSE_CONFIG_FILENAME}
