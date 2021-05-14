@@ -23,6 +23,14 @@ Features:
 - Generate HTML notebook from R notebook using a CLI, e.g. to generate HTML
   notebooks in GitHub workflows before publishing them to GitHub Pages.
 
+This image includes the following Sage software:
+
+- R libraries
+  - [sagethemes]
+- Python packages
+  - [challengeutils]
+  - [synapseclient]
+
 ## Usage
 
 1. Create and edit the configuration file. You can initially start RStudio using
@@ -40,15 +48,11 @@ default username (`rstudio`) and the password specified in `.env`.
 To stop RStudio, enter `Ctrl+C` followed by `docker-compose down`.  If running
 in detached mode, you will only need to enter `docker-compose down`.
 
-## Accessing logs
+## Setting Synapse credentials
 
-Follow the logs using `docker logs`
-
-```console
-docker logs --follow rstudio
-```
-
-Rotating log files are available in `/var/log/rstudio`.
+Set the environment variables `SYNAPSE_TOKEN` to the value of one of your
+Synapse Personal Access Tokens. If this variable is set, it will be used to
+create the configuration file `~/.synapseConfig` when the container starts.
 
 ## Using Conda
 
@@ -103,11 +107,15 @@ In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
 
 Set the environment variable `ROOT=TRUE` (default is `FALSE`).
 
-## Setting Synapse credentials
+## Accessing logs
 
-Set the environment variables `SYNAPSE_TOKEN` to the value of one of your
-Synapse Personal Access Tokens. If this variable is set, it will be used to
-create the configuration file `~/.synapseConfig` when the container starts.
+Follow the logs using `docker logs`
+
+```console
+docker logs --follow rstudio
+```
+
+Rotating log files are available in `/var/log/rstudio`.
 
 ## Generating an HTML notebook
 
@@ -188,3 +196,6 @@ Similarly, run this command to convert the notebook to PDF.
 [Sage Bionetworks]: https://sagebionetworks.org
 [reticulate]: https://rstudio.github.io/reticulate
 [sagebionetworks/rstudio]: https://hub.docker.com/repository/docker/sagebionetworks/rstudio
+[sagethemes]: https://github.com/Sage-Bionetworks/sagethemes
+[challengeutils]: https://github.com/Sage-Bionetworks/challengeutils
+[synapseclient]: https://github.com/Sage-Bionetworks/synapsePythonClient
