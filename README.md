@@ -26,10 +26,10 @@ Features:
 This image includes the following Sage software:
 
 - R libraries
-  - [sagethemes]
+  - [sagethemes]: Sage-branded plot themes
 - Python packages
-  - [challengeutils]
-  - [synapseclient]
+  - [challengeutils]: Synapse challenge utility functions
+  - [synapseclient]: Programmatic interface to Synapse services for Python
 
 ## Usage
 
