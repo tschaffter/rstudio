@@ -9,16 +9,24 @@ Docker image for analyses using RStudio and Python-Conda
 
 ## Overview
 
-This project provides
+This project provides a portable development environment that enables to combine
+R and Python codes. The Docker image offered by this project extends the
+official [RStudio image].
 
-- a development environment where R and Python codes work together
-- a portable development environment using Docker
-- a versionized development environment
+Features:
+
+- Use sentitive information like credentials without specifying them in your
+  notebooks, hence preventing the risk of publishing this information publicly.
+- Create and manage Conda environments (Miniconda) using the R library
+  [reticulate] to run and/or develop programs that requires different versions
+  of Python.
+- Generate HTML notebook from R notebook using a CLI, e.g. to generate HTML
+  notebooks in GitHub workflows before publishing them to GitHub Pages.
 
 ## Usage
 
-1. Create and edit the file that contains the environment variables. You can
-   initially start RStudio using this configuration as-is.
+1. Create and edit the configuration file. You can initially start RStudio using
+   this configuration as-is.
 
        cp .env.example .env
 
@@ -39,28 +47,6 @@ Follow the logs using `docker logs`
     docker logs --follow rstudio
 
 Rotating log files are available in `/var/log/rstudio`.
-
-## Setting user / group identifiers
-
-When using Docker volumes, permissions issues can arise between the host OS and
-the container. You can avoid these issues by letting RStudio know the User ID
-(UID) and Group ID (GID) it should use when creating and editting files so that
-these IDs match yours, which you can get using the command `id`:
-
-    $ id
-    uid=1000(kelsey) gid=1000(kelsey) groups=1000(kelsey)
-
-In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
-
-## Giving the user root permissions
-
-Set the environment variable `ROOT=TRUE` (default is `FALSE`).
-
-## Setting Synapse credentials
-
-Set the environment variables `SYNAPSE_TOKEN` to the value of one of your
-Synapse Personal Access Tokens. If this variable is set, it will be used to
-create the configuration file `~/.synapseConfig` when the container starts.
 
 ## Using Conda
 
@@ -93,7 +79,29 @@ environment named `sage-bionetworks`.
     2      sage-bionetworks /opt/miniconda/envs/sage/bin/python
     > use_condaenv("sage-bionetworks", required = TRUE)
 
-## Rendering an HTML notebook using a CLI
+## Setting user / group identifiers
+
+When using Docker volumes, permissions issues can arise between the host OS and
+the container. You can avoid these issues by letting RStudio know the User ID
+(UID) and Group ID (GID) it should use when creating and editting files so that
+these IDs match yours, which you can get using the command `id`:
+
+    $ id
+    uid=1000(kelsey) gid=1000(kelsey) groups=1000(kelsey)
+
+In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
+
+## Giving the user root permissions
+
+Set the environment variable `ROOT=TRUE` (default is `FALSE`).
+
+## Setting Synapse credentials
+
+Set the environment variables `SYNAPSE_TOKEN` to the value of one of your
+Synapse Personal Access Tokens. If this variable is set, it will be used to
+create the configuration file `~/.synapseConfig` when the container starts.
+
+## Generating an HTML notebook
 
 This Docker image provides the command `render` that generates an HTML or PDF
 notebook from an R notebook (*.Rmd*). Run the command below from the host to
@@ -136,10 +144,10 @@ You should avoid using a moving tag like `latest` when deploying containers in
 production, because this makes it hard to track which version of the image is
 running and hard to roll back.
 
-## Contributing
+<!-- ## Contributing
 
 Thinking about contributing to this project? Get started by reading our
-[Contributor Guide](CONTRIBUTING.md).
+[Contributor Guide](CONTRIBUTING.md). -->
 
 ## License
 
@@ -159,6 +167,7 @@ Similarly, run this command to convert the notebook to PDF.
 <!-- Links -->
 
 [rocker/rstudio]: https://hub.docker.com/r/rocker/rstudio
+[RStudio image]: https://hub.docker.com/r/rocker/rstudio
 [Miniconda]: https://docs.conda.io/en/latest/miniconda.html
 [synapse]: https://www.synapse.org/
 [Synapse Python client]: https://pypi.org/project/synapseclient/
