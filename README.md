@@ -144,8 +144,8 @@ always point to the same git commit once it has been created.
 ### Docker tags
 
 The artifact published by this repository is the Docker image
-[sagebionetworks/rstudio]. The versions of the image are aligned with the versions of
-[rocker/rstudio], not the GitHub tags of this repository.
+[sagebionetworks/rstudio]. The versions of the image are aligned with the
+versions of R/RStudio, not the GitHub tags of this repository.
 
 The table below describes the image tags available.
 
@@ -153,9 +153,9 @@ The table below describes the image tags available.
 |---------------------------------|--------|------------
 | `latest`                        | Yes    | Latest stable release.
 | `edge`                          | Yes    | Lastest commit made to the default branch.
-| `<major>`                       | Yes    | Latest stable major release of RStudio.
-| `<major>.<minor>`               | Yes    | Latest stable minor release of RStudio.
-| `<major>.<minor>.<patch>`       | Yes    | Latest stable patch release of RStudio.
+| `<major>`                       | Yes    | Latest stable major release of R/RStudio.
+| `<major>.<minor>`               | Yes    | Latest stable minor release of R/RStudio.
+| `<major>.<minor>.<patch>`       | Yes    | Latest stable patch release of R/RStudio.
 | `<major>.<minor>.<patch>-<sha>` | No     | Same as above but with the reference to the git commit.
 
 You should avoid using a moving tag like `latest` when deploying containers in
