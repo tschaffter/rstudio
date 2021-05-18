@@ -14,7 +14,7 @@ updates:
     target-branch: "main"
 
   - package-ecosystem: "pip"
-    directory: "/conda/sage"
+    directory: "/conda/sage-bionetworks"
     schedule:
       interval: "monthly"
     target-branch: "main"

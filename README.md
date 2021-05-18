@@ -10,8 +10,8 @@ Docker image for analyses using RStudio and Python-Conda
 ## Overview
 
 This project provides a portable development environment that enables to combine
-R and Python codes. The Docker image offered by this project extends the
-official [RStudio image].
+R and Python codes. The Docker image [sagebionetworks/rstudio] offered by this
+project is based on the image [rocker/rstudio].
 
 Features:
 
@@ -22,14 +22,22 @@ Features:
   of Python.
 - Generate HTML notebook from R notebook using a CLI, e.g. to generate HTML
   notebooks in GitHub workflows before publishing them to GitHub Pages.
+- Benefit from regular updates of the image [sagebionetworks/rstudio] which will
+  bring the latest versions of R/RStudio and other dependencies (Miniconda, R
+  and Python packages).
 
-This image includes the following Sage software:
+This image includes the following common Sage software:
 
 - R libraries
   - [sagethemes]: Sage-branded plot themes.
 - Python packages
   - [challengeutils]: Synapse challenge utility functions.
   - [synapseclient]: Programmatic interface to Synapse services for Python.
+
+Other:
+
+- All R packages (see [renv.lock] and [Dockerfile])
+- All Python packages (see [conda/sage-bionetworks/environment.yml])
 
 ## Usage
 
@@ -47,6 +55,19 @@ default username (`rstudio`) and the password specified in `.env`.
 
 To stop RStudio, enter `Ctrl+C` followed by `docker-compose down`.  If running
 in detached mode, you will only need to enter `docker-compose down`.
+
+## How to use this repository
+
+You can use the image [sagebionetworks/rstudio] as-is to start an instance of
+RStudio and develop tools that interact with Sage Bionetworks services, e.g.
+Synapse.
+
+If you want to create a portable development environment, start by creating a
+new GitHub repository from [this template]. You can then customize your
+environment by specifying the R and Python packages to include with your image.
+Finally, edit the the GitHub workflow [.github/workflows/ci.yml] to indicates
+the Docker repository where the image should be pushed (see Section
+[Versioning](#Versioning)).
 
 ## Setting Synapse credentials
 
@@ -199,3 +220,8 @@ Similarly, run this command to convert the notebook to PDF.
 [sagethemes]: https://github.com/Sage-Bionetworks/sagethemes
 [challengeutils]: https://github.com/Sage-Bionetworks/challengeutils
 [synapseclient]: https://github.com/Sage-Bionetworks/synapsePythonClient
+[renv.lock]: renv.lock
+[Dockerfile]: Dockerfile
+[conda/sage-bionetworks/environment.yml]: conda/sage-bionetworks/environment.yml
+[this template]: https://github.com/nlpsandbox/nlpsandbox.io/generate
+[.github/workflows/ci.yml]: .github/workflows/ci.yml
