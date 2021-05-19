@@ -112,7 +112,7 @@ environment named `sage-bionetworks`.
 > conda_list()
     name                              python
 1 miniconda           /opt/miniconda/bin/python
-2      sage-bionetworks /opt/miniconda/envs/sage/bin/python
+2      sage-bionetworks /opt/miniconda/envs/sage-bionetworks/bin/python
 > use_condaenv("sage-bionetworks", required = TRUE)
 ```
 
