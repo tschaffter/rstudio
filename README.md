@@ -150,6 +150,7 @@ HTML notebook that will be saved to the same directory with the extension
 
 ```console
 docker run --rm \
+    --env-file .env \
     -v $(pwd)/notebooks:/data \
     -e RENDER_INPUT="/data/examples/notebook.Rmd" \
     tschaffter/rstudio \
