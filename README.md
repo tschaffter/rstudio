@@ -152,9 +152,8 @@ HTML notebook that will be saved to the same directory with the extension
 docker run --rm \
     --env-file .env \
     -v $(pwd)/notebooks:/data \
-    -e RENDER_INPUT="/data/examples/notebook.Rmd" \
-    tschaffter/rstudio \
-    render
+    tschaffter/rstudio:4.0.5 \
+    render /data/examples/notebook.Rmd
 ```
 
 ## Versioning
