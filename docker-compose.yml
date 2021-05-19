@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   rstudio:
-    image: tschaffter/rstudio:latest
+    image: plop:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,3 +13,4 @@ services:
       - .:/home/rstudio/awesome-project:rw
     ports:
       - "${HOST_PORT}:8787"
+    command: rstudio

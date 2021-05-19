@@ -1,4 +1,6 @@
 #!/usr/bin/with-contenv bash
+#
+# Prepare the user's environment.
 
 set -euo pipefail
 

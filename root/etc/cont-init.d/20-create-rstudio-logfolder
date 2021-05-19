@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# Enable logging for RStudio.
 
 mkdir -p /var/log/rstudio
 chown nobody:nogroup /var/log/rstudio
