@@ -136,13 +136,9 @@ Set the environment variable `ROOT=TRUE` (default is `FALSE`).
 
 ## Accessing logs
 
-## Setting Synapse credentials
-
 ```console
 docker logs --follow rstudio
 ```
-
-## Generating an HTML notebook
 
 ## Generating an HTML notebook
 
@@ -155,7 +151,7 @@ HTML notebook that will be saved to the same directory with the extension
 ```console
 docker run --rm \
     -v $(pwd)/notebooks:/data \
-    -e RENDER_INPUT="/data/example.Rmd" \
+    -e RENDER_INPUT="/data/examples/notebook.Rmd" \
     tschaffter/rstudio \
     render
 ```
