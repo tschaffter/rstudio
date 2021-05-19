@@ -1,6 +1,6 @@
 ---
-title: "Combining R and Python"
-author: "Thomas Schaffter"
+title: "Using R and Python together"
+author: "Sage Bionetworks"
 date: "`r Sys.Date()`"
 output:
   html_document:

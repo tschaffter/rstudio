@@ -10,8 +10,8 @@ Docker image for analyses using RStudio and Python-Conda
 ## Overview
 
 This project provides a portable development environment that enables to combine
-R and Python codes. The Docker image offered by this project extends the
-official [RStudio image].
+R and Python codes. The Docker image [tschaffter/rstudio] offered by this
+project is based on the image [rocker/rstudio].
 
 Features:
 
@@ -22,6 +22,28 @@ Features:
   of Python.
 - Generate HTML notebook from R notebook using a CLI, e.g. to generate HTML
   notebooks in GitHub workflows before publishing them to GitHub Pages.
+- Benefit from regular updates of the image [tschaffter/rstudio] which will
+  bring the latest versions of R/RStudio and other dependencies (Miniconda, R
+  and Python packages).
+
+This image includes the following common Sage software:
+
+- R libraries
+  - [sagethemes]: Sage-branded plot themes.
+- Python packages
+  - [challengeutils]: Synapse challenge utility functions.
+  - [synapseclient]: Programmatic interface to Synapse services for Python.
+
+All packages:
+
+- R (see [renv.lock] and [Dockerfile]).
+- Python (see [conda/sage-bionetworks/environment.yml]).
+
+Examples:
+
+- Example notebooks (see [notebooks/examples](notebooks/examples)).
+- Example projects that use this repository / image:
+  - [Sage-Bionetworks/rstudio]
 
 ## Usage
 
@@ -40,15 +62,24 @@ default username (`rstudio`) and the password specified in `.env`.
 To stop RStudio, enter `Ctrl+C` followed by `docker-compose down`.  If running
 in detached mode, you will only need to enter `docker-compose down`.
 
-## Accessing logs
+## How to use this repository
 
-Follow the logs using `docker logs`
+You can use the image [tschaffter/rstudio] as-is to start an instance of
+RStudio and develop tools that interact with Sage Bionetworks services, e.g.
+Synapse.
 
-```console
-docker logs --follow rstudio
-```
+If you want to create a portable development environment, start by creating a
+new GitHub repository from [this template]. You can then customize your
+environment by specifying the R and Python packages to include with your image.
+Finally, edit the the GitHub workflow [.github/workflows/ci.yml] to indicates
+the Docker repository where the image should be pushed (see Section
+[Versioning](#Versioning)).
 
-Rotating log files are available in `/var/log/rstudio`.
+## Setting Synapse credentials
+
+Set the environment variables `SYNAPSE_TOKEN` to the value of one of your
+Synapse Personal Access Tokens. If this variable is set, it will be used to
+create the configuration file `~/.synapseConfig` when the container starts.
 
 ## Using Conda
 
@@ -103,11 +134,15 @@ In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
 
 Set the environment variable `ROOT=TRUE` (default is `FALSE`).
 
+## Accessing logs
+
 ## Setting Synapse credentials
 
-Set the environment variables `SYNAPSE_TOKEN` to the value of one of your
-Synapse Personal Access Tokens. If this variable is set, it will be used to
-create the configuration file `~/.synapseConfig` when the container starts.
+```console
+docker logs --follow rstudio
+```
+
+## Generating an HTML notebook
 
 ## Generating an HTML notebook
 
@@ -136,8 +171,8 @@ always point to the same git commit once it has been created.
 ### Docker tags
 
 The artifact published by this repository is the Docker image
-[tschaffter/rstudio]. The versions of the image are aligned with the versions of
-[rocker/rstudio], not the GitHub tags of this repository.
+[tschaffter/rstudio]. The versions of the image are aligned with the
+versions of R/RStudio, not the GitHub tags of this repository.
 
 The table below describes the image tags available.
 
@@ -145,9 +180,9 @@ The table below describes the image tags available.
 |---------------------------------|--------|------------
 | `latest`                        | Yes    | Latest stable release.
 | `edge`                          | Yes    | Lastest commit made to the default branch.
-| `<major>`                       | Yes    | Latest stable major release of RStudio.
-| `<major>.<minor>`               | Yes    | Latest stable minor release of RStudio.
-| `<major>.<minor>.<patch>`       | Yes    | Latest stable patch release of RStudio.
+| `<major>`                       | Yes    | Latest stable major release of R/RStudio.
+| `<major>.<minor>`               | Yes    | Latest stable minor release of R/RStudio.
+| `<major>.<minor>.<patch>`       | Yes    | Latest stable patch release of R/RStudio.
 | `<major>.<minor>.<patch>-<sha>` | No     | Same as above but with the reference to the git commit.
 
 You should avoid using a moving tag like `latest` when deploying containers in
@@ -188,3 +223,13 @@ Similarly, run this command to convert the notebook to PDF.
 [Sage Bionetworks]: https://sagebionetworks.org
 [reticulate]: https://rstudio.github.io/reticulate
 [tschaffter/rstudio]: https://hub.docker.com/repository/docker/tschaffter/rstudio
+[sagethemes]: https://github.com/Sage-Bionetworks/sagethemes
+[challengeutils]: https://github.com/Sage-Bionetworks/challengeutils
+[synapseclient]: https://github.com/Sage-Bionetworks/synapsePythonClient
+[renv.lock]: renv.lock
+[Dockerfile]: Dockerfile
+[conda/sage-bionetworks/environment.yml]: conda/sage-bionetworks/environment.yml
+[this template]: https://github.com/nlpsandbox/nlpsandbox.io/generate
+[.github/workflows/ci.yml]: .github/workflows/ci.yml
+[Sage-Bionetworks-Challenges/challenge-analysis]: https://github.com/Sage-Bionetworks-Challenges/challenge-analysis
+[Sage-Bionetworks/rstudio]: https://github.com/Sage-Bionetworks/rstudio
