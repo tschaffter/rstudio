@@ -2,9 +2,9 @@
 .empty/
 .env
 renv/
-notebooks/*.html
-notebooks/*.log
-notebooks/*.tex
+notebooks/**/*.html
+notebooks/**/*.log
+notebooks/**/*.tex
 
 # History files
 .Rhistory
