@@ -128,7 +128,7 @@ $ id
 uid=1000(kelsey) gid=1000(kelsey) groups=1000(kelsey)
 ```
 
-In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
+In this example, we would set `USERID=1000` and `GROUPID=1000`.
 
 ## Giving the user root permissions
 

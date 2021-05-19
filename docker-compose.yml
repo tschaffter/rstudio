@@ -7,13 +7,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: rstudio
-    environment:
-      - USER=${RSTUDIO_USER}
-      - PASSWORD=${RSTUDIO_PASSWORD}
-      - USERID=${RSTUDIO_USERID}
-      - GROUPID=${RSTUDIO_GROUPID}
-      - ROOT=${RSTUDIO_ROOT}
-      - SYNAPSE_TOKEN
+    env_file:
+      - .env
     volumes:
       - .:/home/rstudio/awesome-project:rw
     ports:
