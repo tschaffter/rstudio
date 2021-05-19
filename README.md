@@ -42,7 +42,7 @@ All packages:
 Examples:
 
 - Example notebooks (see [notebooks/examples](notebooks/examples)).
-- Example projects that use this repository / Docker image:
+- Example projects that use this repository / image:
   - [Sage-Bionetworks-Challenges/challenge-analysis] (work in progress)
 
 ## Usage
