@@ -2,19 +2,15 @@ version: "3.8"
 
 services:
   rstudio:
-    image: tschaffter/rstudio:latest
+    image: tschaffter/rstudio:4.0.5
     build:
       context: .
       dockerfile: Dockerfile
     container_name: rstudio
-    environment:
-      - USER=${RSTUDIO_USER}
-      - PASSWORD=${RSTUDIO_PASSWORD}
-      - USERID=${RSTUDIO_USERID}
-      - GROUPID=${RSTUDIO_GROUPID}
-      - ROOT=${RSTUDIO_ROOT}
-      - SYNAPSE_TOKEN
+    env_file:
+      - .env
     volumes:
       - .:/home/rstudio/awesome-project:rw
     ports:
       - "${HOST_PORT}:8787"
+    command: rstudio

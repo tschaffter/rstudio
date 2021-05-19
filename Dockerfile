@@ -15,6 +15,7 @@ RUN apt-get update -qq -y \
     && apt-get install --no-install-recommends -qq -y \
         bash-completion \
         curl \
+        gosu \
         libxml2-dev \
         zlib1g-dev \
         # Fix https://github.com/tschaffter/rstudio/issues/11 (1/2)
@@ -41,11 +42,11 @@ RUN apt-get update -qq -y \
 # Create conda environments
 COPY conda /tmp/conda
 RUN conda init bash \
-    && conda env create -f /tmp/conda/sage-bionetworks/environment.yaml \
+    && conda env create -f /tmp/conda/sage-bionetworks/environment.yml \
     && rm -fr /tmp/conda \
     # Fix libssl issue that affects conda env used with reticulate
     && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 \
-        /opt/miniconda/envs/sage/lib/libssl.so.1.1 \
+        /opt/miniconda/envs/sage-bionetworks/lib/libssl.so.1.1 \
     && conda activate base || true \
     && echo "conda activate sage-bionetworks" >> ~/.bashrc
 
@@ -60,3 +61,10 @@ RUN install2.r --error renv \
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
 COPY root /
+
+WORKDIR /
+COPY docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["rstudio"]

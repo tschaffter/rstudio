@@ -128,7 +128,7 @@ $ id
 uid=1000(kelsey) gid=1000(kelsey) groups=1000(kelsey)
 ```
 
-In this example, we would set `RSTUDIO_USERID=1000` and `RSTUDIO_GROUPID=1000`.
+In this example, we would set `USERID=1000` and `GROUPID=1000`.
 
 ## Giving the user root permissions
 
@@ -136,13 +136,9 @@ Set the environment variable `ROOT=TRUE` (default is `FALSE`).
 
 ## Accessing logs
 
-## Setting Synapse credentials
-
 ```console
 docker logs --follow rstudio
 ```
-
-## Generating an HTML notebook
 
 ## Generating an HTML notebook
 
@@ -154,8 +150,9 @@ HTML notebook that will be saved to the same directory with the extension
 
 ```console
 docker run --rm \
+    --env-file .env \
     -v $(pwd)/notebooks:/data \
-    -e RENDER_INPUT="/data/example.Rmd" \
+    -e RENDER_INPUT="/data/examples/notebook.Rmd" \
     tschaffter/rstudio \
     render
 ```
