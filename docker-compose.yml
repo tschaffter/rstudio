@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   rstudio:
-    image: plop:latest
+    image: tschaffter/rstudio:4.0.5
     build:
       context: .
       dockerfile: Dockerfile
