@@ -1,6 +1,6 @@
 ---
 title: "Sagethemes"
-author: "Thomas Schaffter"
+author: "Sage Bionetworks"
 date: "`r Sys.Date()`"
 output:
   html_document:

@@ -1,6 +1,6 @@
 ---
-title: "Logging in to Synapse"
-author: "Thomas Schaffter"
+title: "Interacting with Synapse API"
+author: "Sage Bionetworks"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -11,6 +11,12 @@ output:
   pdf_document:
     toc: yes
 ---
+
+# Requirements
+
+Set the value of `SYNAPSE_TOKEN` in the configuration file `.env` to one of your
+Synapse personal access tokens. Token can be generated in Synpase via your User
+Menu > Settings > Persona Access Tokens.
 
 # Conda environments
 

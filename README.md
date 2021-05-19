@@ -34,10 +34,16 @@ This image includes the following common Sage software:
   - [challengeutils]: Synapse challenge utility functions.
   - [synapseclient]: Programmatic interface to Synapse services for Python.
 
-Other:
+All packages:
 
-- All R packages (see [renv.lock] and [Dockerfile])
-- All Python packages (see [conda/sage-bionetworks/environment.yml])
+- R (see [renv.lock] and [Dockerfile]).
+- Python (see [conda/sage-bionetworks/environment.yml]).
+
+Examples:
+
+- Example notebooks (see [notebooks/examples](notebooks/examples)).
+- Example projects that use this repository / Docker image:
+  - [Sage-Bionetworks-Challenges/challenge-analysis] (work in progress)
 
 ## Usage
 
@@ -225,3 +231,4 @@ Similarly, run this command to convert the notebook to PDF.
 [conda/sage-bionetworks/environment.yml]: conda/sage-bionetworks/environment.yml
 [this template]: https://github.com/nlpsandbox/nlpsandbox.io/generate
 [.github/workflows/ci.yml]: .github/workflows/ci.yml
+[Sage-Bionetworks-Challenges/challenge-analysis]: https://github.com/Sage-Bionetworks-Challenges/challenge-analysis
