@@ -73,8 +73,8 @@ jobs:
           fi
         elif [[ $GITHUB_REF == refs/pull/* ]]; then
           VERSION=pr-${{ github.event.number }}
-          PUSH_IMAGE=true
-          PUSH_NOTEBOOKS=false
+          PUSH_IMAGE=false
+          PUSH_NOTEBOOKS=true
         fi
         TAGS="${DOCKER_IMAGE}:${VERSION}"
         if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
@@ -94,6 +94,7 @@ jobs:
         echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
         echo ::set-output name=push_image::${PUSH_IMAGE}
         echo ::set-output name=push_notebooks::${PUSH_NOTEBOOKS}
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
 
@@ -143,7 +144,7 @@ jobs:
           --env-file .env \
           -v $(pwd)/notebooks:/data \
           rstudio-cached:latest \
-          render /data/examples/synapse.Rmd
+          render /data/examples/*.Rmd
 
     - name: Push image
       if: steps.prep.outputs.push_image == 'true'
