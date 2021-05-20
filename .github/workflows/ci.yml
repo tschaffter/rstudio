@@ -130,4 +130,4 @@ jobs:
       with:
         args: render /github/workspace/notebooks/examples/synapse.Rmd
     - name: List HTML notebooks
-      run: ls -al notebooks/*.html
+      run: ls -al notebooks/examples/*.html
