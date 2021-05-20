@@ -92,6 +92,19 @@ Example projects that use this repository / image:
   - [Sage-Bionetworks/rstudio]
   - [Sage-Bionetworks-Challenges/challenge-analysis]
 
+## Manage R and Python dependencies
+
+### R
+
+
+
+### Python
+
+See the content of the folder `conda` for an example of how to define a conda
+environment. The packages to add to this environment must be added to the file
+`requirements.txt`. The creating of one or more conda environments can be
+specified in `Dockerfile`.
+
 ## Setting Synapse credentials
 
 Set the environment variables `SYNAPSE_TOKEN` to the value of one of your
