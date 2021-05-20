@@ -143,7 +143,7 @@ jobs:
           --env-file .env \
           -v $(pwd)/notebooks:/data \
           rstudio-cached:latest \
-          render /data/examples/synapse.Rmd
+          render /data/examples/*.Rmd
 
     - name: Push image
       if: steps.prep.outputs.push_image == 'true'

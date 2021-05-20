@@ -7,14 +7,14 @@ output_format = Sys.getenv("RENDER_OUTPUT_FORMAT", unset = "html_document")
 quiet = Sys.getenv("RENDER_QUIET", unset = "TRUE")
 
 options <- commandArgs(trailingOnly = TRUE)
-input <- options[1]
+notebook_files <- Sys.glob(options[1], dirmark = FALSE)
 
-if (is.na(input)) {
-  stop("The environment variable RENDER_INPUT is required")
+# TODO: Add try and catch
+for (file in notebook_files) {
+  message(sprintf("Rendering notebook %s", file))
+  rmarkdown::render(
+    file,
+    output_format,
+    quiet = as.logical(quiet)
+  )
 }
-
-rmarkdown::render(
-  input,
-  output_format,
-  quiet = as.logical(quiet)
-)
