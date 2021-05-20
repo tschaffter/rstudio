@@ -90,28 +90,41 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     - name: Set up Docker Buildx
+      id: buildx
       uses: docker/setup-buildx-action@v1
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-single-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-single-buildx
+
     - name: Login to Docker Hub
-      if: ${{ steps.prep.outputs.push }}
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    # - name: Build and push
-    #   id: docker_build
-    #   uses: docker/build-push-action@v2
-    #   with:
-    #     context: .
-    #     file: Dockerfile
-    #     platforms: linux/amd64
-    #     push: ${{ steps.prep.outputs.push }}
-    #     tags: ${{ steps.prep.outputs.tags }}
-    #     labels: |
-    #       org.opencontainers.image.created=${{ steps.prep.outputs.created }}
-    #       org.opencontainers.image.source=${{ github.repositoryUrl }}
-    #       org.opencontainers.image.version=${{ steps.prep.outputs.version }}
-    #       org.opencontainers.image.revision=${{ github.sha }}
-    #       org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
+
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: Dockerfile
+        builder: ${{ steps.buildx.outputs.name }}
+        load: true
+        push: false  # ${{ steps.prep.outputs.push }}
+        platforms: linux/amd64
+        tags: ${{ steps.prep.outputs.tags }}
+        labels: |
+          org.opencontainers.image.created=${{ steps.prep.outputs.created }}
+          org.opencontainers.image.source=${{ github.repositoryUrl }}
+          org.opencontainers.image.version=${{ steps.prep.outputs.version }}
+          org.opencontainers.image.revision=${{ github.sha }}
+          org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache-new
     # - name: Update Docker Hub repository description
     #   if: steps.prep.outputs.push == 'true'
     #   uses: peter-evans/dockerhub-description@v2
@@ -119,6 +132,8 @@ jobs:
     #     username: ${{ secrets.DOCKERHUB_USERNAME }}
     #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
     #     repository: ${{ env.docker_repository }}
+    # - name: Image digest
+    #   run: echo ${{ steps.docker_build.outputs.digest }}
     - name: Prepare and export .env
       if: steps.prep.outputs.push == 'true'
       run: |
@@ -129,11 +144,21 @@ jobs:
           "GROUPID=$(id -g)" \
           "SYNAPSE_TOKEN=${{ secrets.SYNAPSE_TOKEN }}" | tee -a .env >/dev/null
         grep -v '^#' .env >> $GITHUB_ENV
+
     - name: Generate HTML notebooks
-      if: steps.prep.outputs.push == 'true'
-      uses: docker://tschaffter/rstudio:edge  # use sha256
-      with:
-        args: render /github/workspace/notebooks/examples/synapse.Rmd
+      run: |
+        docker run --rm \
+          --env-file .env \
+          -v $(pwd)/notebooks:/data \
+          tschaffter/rstudio \
+          render /data/examples/notebook.Rmd
+
+    # - name: Generate HTML notebooks
+    #   if: steps.prep.outputs.push == 'true'
+    #   uses: docker://tschaffter/rstudio:edge  # use sha256
+    #   with:
+    #     args: render /github/workspace/notebooks/examples/synapse.Rmd
+
     - name: Publish HTML notebooks to GH Pages
       if: steps.prep.outputs.push == 'true'
       run: |
