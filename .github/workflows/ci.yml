@@ -121,12 +121,13 @@ jobs:
         cp .env.example .env
         printf "%s\n" \
           "PASSWORD=${{ secrets.RSTUDIO_PASSWORD }}" \
-          "ROOT=TRUE" \
+          "USERID=$(id -u)" \
+          "GROUPID=$(id -g)" \
           "SYNAPSE_TOKEN=${{ secrets.SYNAPSE_TOKEN }}" | tee -a .env >/dev/null
         grep -v '^#' .env >> $GITHUB_ENV
     - name: Generate HTML notebooks
       uses: docker://tschaffter/rstudio:latest  # use sha256
       with:
-        args: sudo render /github/workspace/notebooks/examples/synapse.Rmd
+        args: render /github/workspace/notebooks/examples/synapse.Rmd
     - name: List HTML notebooks
       run: ls -al notebooks/*.html
