@@ -13,6 +13,10 @@ on:
 
 env:
   docker_repository: tschaffter/rstudio
+  # github.event.repository.clone_url not available for on: schedule
+  clone_url: https://github.com/tschaffter/rstudio.git
+  # github.event.repository.default_branch not available for on: schedule
+  default_branch: main
 
 jobs:
   lint:
@@ -65,6 +69,7 @@ jobs:
           fi
         elif [[ $GITHUB_REF == refs/pull/* ]]; then
           VERSION=pr-${{ github.event.number }}
+          PUSH=true
         fi
         TAGS="${DOCKER_IMAGE}:${VERSION}"
         if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
@@ -114,9 +119,8 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         repository: ${{ env.docker_repository }}
-    - name: Run id
-      run: id
     - name: Prepare and export .env
+      if: steps.prep.outputs.push == 'true'
       run: |
         cp .env.example .env
         printf "%s\n" \
@@ -126,8 +130,54 @@ jobs:
           "SYNAPSE_TOKEN=${{ secrets.SYNAPSE_TOKEN }}" | tee -a .env >/dev/null
         grep -v '^#' .env >> $GITHUB_ENV
     - name: Generate HTML notebooks
+      if: steps.prep.outputs.push == 'true'
       uses: docker://tschaffter/rstudio:edge  # use sha256
       with:
         args: render /github/workspace/notebooks/examples/synapse.Rmd
-    - name: List HTML notebooks
-      run: ls -al notebooks/examples/*.html
+    - name: Publish HTML notebooks to GH Pages
+      if: steps.prep.outputs.push == 'true'
+      run: |
+        git clone ${{ env.clone_url }} \
+          --branch gh-pages --single-branch gh-pages
+
+        # Update gh-pages: version specified
+        NOTEBOOKS_TARGET_DIR=gh-pages/${{ steps.prep.outputs.version }}/notebooks
+        rm -fr ${NOTEBOOKS_TARGET_DIR}
+        mkdir -p ${NOTEBOOKS_TARGET_DIR}
+        cp -R notebooks/examples/*.html ${NOTEBOOKS_TARGET_DIR}
+
+        # Update gh-pages: latest, major, and minor versions
+        if [ ! -z "${{ steps.prep.outputs.version_major }}" ]; then
+          # Update latest (e.g. "1.2.3" => "latest")
+          NOTEBOOKS_TARGET_DIR=gh-pages/latest/notebooks
+          rm -fr ${NOTEBOOKS_TARGET_DIR}
+          mkdir -p ${NOTEBOOKS_TARGET_DIR}
+          cp -R notebooks/examples/*.html ${NOTEBOOKS_TARGET_DIR}
+
+          # Update major version (e.g. "1.2.3" => "1")
+          NOTEBOOKS_TARGET_DIR=gh-pages/${{ steps.prep.outputs.version_major }}/notebooks
+          rm -fr ${NOTEBOOKS_TARGET_DIR}
+          mkdir -p ${NOTEBOOKS_TARGET_DIR}
+          cp -R notebooks/examples/*.html ${NOTEBOOKS_TARGET_DIR}
+
+          # Update minor version (e.g. "1.2.3" => "1.2")
+          NOTEBOOKS_TARGET_DIR=gh-pages/${{ steps.prep.outputs.version_minor }}/notebooks
+          rm -fr ${NOTEBOOKS_TARGET_DIR}
+          mkdir -p ${NOTEBOOKS_TARGET_DIR}
+          cp -R notebooks/examples/*.html ${NOTEBOOKS_TARGET_DIR}
+        fi
+        cd gh-pages
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Update notebooks" -a || true
+        # The above command will fail if no changes were present, so we ignore
+        # that.
+    - name: Push changes
+      if: steps.prep.outputs.push == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        branch: gh-pages
+        directory: gh-pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true
