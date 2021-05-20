@@ -121,6 +121,8 @@ jobs:
         cp .env.example .env
         printf "%s\n" \
           "PASSWORD=${{ secrets.RSTUDIO_PASSWORD }}" \
+          "USERID=$(id -u)" \
+          "GROUPID=$(id -g)" \
           "SYNAPSE_TOKEN=${{ secrets.SYNAPSE_TOKEN }}" | tee -a .env >/dev/null
         grep -v '^#' .env >> $GITHUB_ENV
     - name: Generate HTML notebooks
