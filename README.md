@@ -57,7 +57,6 @@ Notebook | Description | HTML notebook
 [sagethemes.Rmd](notebooks/examples/sagethemes.Rmd)     | Example notebook provided by the R library [sagethemes]. | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/sagethemes.html)
 [synapse.Rmd](notebooks/examples/synapse.Rmd)           | Shows how to interact with Synapse API.                  | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/synapse.html)
 
-
 ## Usage
 
 1. Create and edit the configuration file. You can initially start RStudio using
@@ -95,6 +94,11 @@ Example projects that use this repository / image:
 ## Manage R and Python dependencies
 
 ### R
+
+In RStudio, use the following options to add and update libraries:
+
+- `Tools` > `Install Packages...`
+- `Tools` > `Check for Package Updates...`
 
 
 
