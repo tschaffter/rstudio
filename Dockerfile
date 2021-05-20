@@ -55,8 +55,7 @@ COPY renv.lock /tmp/renv.lock
 RUN install2.r --error renv \
     && R -e "renv::consent(provided=TRUE)" \
     && R -e "renv::restore(lockfile='/tmp/renv.lock')" \
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock \
-    && R -e "remotes::install_github('Sage-Bionetworks/sagethemes', ref='main')"
+    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
 
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
