@@ -50,7 +50,7 @@ All packages:
 The notebooks listed below are automatically rendered to HTML and published to
 GitHub Pages by the [CI/CD workflow of this repository](.github/workflows/ci.yml).
 
-Notebook | Description | HTML notebook
+Notebook | Description | HTML Notebook
 -------- | ----------- | -------------
 [notebook.Rmd](notebooks/examples/notebook.Rmd)         | Default RStudio notebook.                                | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/notebook.html)
 [r-and-python.Rmd](notebooks/examples/r-and-python.Rmd) | Shows how to use R and Python together.                  | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/r-and-python.html)
