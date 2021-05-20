@@ -34,7 +34,7 @@ RUN apt-get update -qq -y \
         -b \
         -p /opt/miniconda \
     && rm -f Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
-    && useradd -s /bin/bash miniconda \
+    && useradd -u 1500 -s /bin/bash miniconda \
     && chown -R miniconda:miniconda /opt/miniconda \
     && chmod -R go-w /opt/miniconda \
     && conda --version
