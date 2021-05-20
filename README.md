@@ -9,8 +9,13 @@ Docker image for analyses using RStudio and Python-Conda
 
 ## Overview
 
-This project provides a portable development environment that enables to combine
-R and Python codes. The Docker image [tschaffter/rstudio] offered by this
+The motivation for this project is to encourage the use of portal development
+environments in research and engineering. The environment should be intuitive to
+use so that anyone can deploy it again and reproduce your results - even you six
+months from now!
+
+This project provides a portable development environment that enables you to use
+R and Python together. The Docker image [tschaffter/rstudio] offered by this
 project is based on the image [rocker/rstudio].
 
 Features:
@@ -18,15 +23,16 @@ Features:
 - Use sentitive information like credentials without specifying them in your
   notebooks, hence preventing the risk of publishing this information publicly.
 - Create and manage Conda environments (Miniconda) using the R library
-  [reticulate] to run and/or develop programs that requires different versions
-  of Python.
-- Generate HTML notebook from R notebook using a CLI, e.g. to generate HTML
-  notebooks in GitHub workflows before publishing them to GitHub Pages.
+  [reticulate] to run and/or develop Python programs that require different
+  version of Python or packages.
+- Render Rmd notebook to HTML using the Docker image provided in this project,
+  e.g. to generate HTML notebooks in GitHub workflows before publishing them to
+  GitHub Pages.
 - Benefit from regular updates of the image [tschaffter/rstudio] which will
   bring the latest versions of R/RStudio and other dependencies (Miniconda, R
   and Python packages).
 
-This image includes the following common Sage software:
+This image includes the following common Sage Bionetworks software:
 
 - R libraries
   - [sagethemes]: Sage-branded plot themes.
@@ -39,11 +45,18 @@ All packages:
 - R (see [renv.lock] and [Dockerfile]).
 - Python (see [conda/sage-bionetworks/environment.yml]).
 
-Examples:
+## Example notebooks
 
-- Example notebooks (see [notebooks/examples](notebooks/examples)).
-- Example projects that use this repository / image:
-  - [Sage-Bionetworks/rstudio]
+The notebooks listed below are automatically rendered to HTML and published to
+GitHub Pages by the [CI/CD workflow of this repository](.github/workflows/ci.yml).
+
+Notebook | Description | HTML notebook
+-------- | ----------- | -------------
+[notebook.Rmd](notebooks/examples/notebook.Rmd)         | Default RStudio notebook.                                | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/notebook.html)
+[r-and-python.Rmd](notebooks/examples/r-and-python.Rmd) | Shows how to use R and Python together.                  | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/r-and-python.html)
+[sagethemes.Rmd](notebooks/examples/sagethemes.Rmd)     | Example notebook provided by the R library [sagethemes]. | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/sagethemes.html)
+[synapse.Rmd](notebooks/examples/synapse.Rmd)           | Shows how to interact with Synapse API.                  | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/synapse.html)
+
 
 ## Usage
 
@@ -74,6 +87,10 @@ environment by specifying the R and Python packages to include with your image.
 Finally, edit the the GitHub workflow [.github/workflows/ci.yml] to indicates
 the Docker repository where the image should be pushed (see Section
 [Versioning](#Versioning)).
+
+Example projects that use this repository / image:
+  - [Sage-Bionetworks/rstudio]
+  - [Sage-Bionetworks-Challenges/challenge-analysis]
 
 ## Setting Synapse credentials
 
@@ -176,6 +193,7 @@ The table below describes the image tags available.
 |---------------------------------|--------|------------
 | `latest`                        | Yes    | Latest stable release.
 | `edge`                          | Yes    | Lastest commit made to the default branch.
+| `weekly`                        | Yes    | Weekly release from the default branch.
 | `<major>`                       | Yes    | Latest stable major release of R/RStudio.
 | `<major>.<minor>`               | Yes    | Latest stable minor release of R/RStudio.
 | `<major>.<minor>.<patch>`       | Yes    | Latest stable patch release of R/RStudio.
