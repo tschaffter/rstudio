@@ -116,13 +116,14 @@ jobs:
         load: true
         push: false  # ${{ steps.prep.outputs.push }}
         platforms: linux/amd64
-        tags: ${{ steps.prep.outputs.tags }}
-        labels: |
-          org.opencontainers.image.created=${{ steps.prep.outputs.created }}
-          org.opencontainers.image.source=${{ github.repositoryUrl }}
-          org.opencontainers.image.version=${{ steps.prep.outputs.version }}
-          org.opencontainers.image.revision=${{ github.sha }}
-          org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
+        tags: rstudio-cached:latest
+        # tags: ${{ steps.prep.outputs.tags }}
+        # labels: |
+        #   org.opencontainers.image.created=${{ steps.prep.outputs.created }}
+        #   org.opencontainers.image.source=${{ github.repositoryUrl }}
+        #   org.opencontainers.image.version=${{ steps.prep.outputs.version }}
+        #   org.opencontainers.image.revision=${{ github.sha }}
+        #   org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new
     # - name: Update Docker Hub repository description
@@ -150,7 +151,7 @@ jobs:
         docker run --rm \
           --env-file .env \
           -v $(pwd)/notebooks:/data \
-          tschaffter/rstudio \
+          rstudio-cached:latest \
           render /data/examples/notebook.Rmd
 
     # - name: Generate HTML notebooks
