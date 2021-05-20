@@ -114,6 +114,8 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         repository: ${{ env.docker_repository }}
+    - name: Run id
+      run: id
     - name: Prepare and export .env
       run: |
         cp .env.example .env
@@ -122,7 +124,7 @@ jobs:
           "SYNAPSE_TOKEN=${{ secrets.SYNAPSE_TOKEN }}" | tee -a .env >/dev/null
         grep -v '^#' .env >> $GITHUB_ENV
     - name: Generate HTML notebooks
-      uses: docker://tschaffter/rstudio:latest
+      uses: docker://tschaffter/rstudio:latest  # use sha256
       with:
         args: render /github/workspace/notebooks/examples/synapse.Rmd
     - name: List HTML notebooks
