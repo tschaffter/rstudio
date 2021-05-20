@@ -127,6 +127,6 @@ jobs:
     - name: Generate HTML notebooks
       uses: docker://tschaffter/rstudio:latest  # use sha256
       with:
-        args: render /github/workspace/notebooks/examples/synapse.Rmd
+        args: sudo render /github/workspace/notebooks/examples/synapse.Rmd
     - name: List HTML notebooks
       run: ls -al notebooks/*.html
