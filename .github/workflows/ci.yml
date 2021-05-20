@@ -126,7 +126,7 @@ jobs:
           "SYNAPSE_TOKEN=${{ secrets.SYNAPSE_TOKEN }}" | tee -a .env >/dev/null
         grep -v '^#' .env >> $GITHUB_ENV
     - name: Generate HTML notebooks
-      uses: docker://tschaffter/rstudio:latest  # use sha256
+      uses: docker://tschaffter/rstudio:edge  # use sha256
       with:
         args: render /github/workspace/notebooks/examples/synapse.Rmd
     - name: List HTML notebooks
