@@ -12,10 +12,14 @@ output:
     toc: yes
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Requirements
 
 Set the value of `SYNAPSE_TOKEN` in the configuration file `.env` to one of your
-Synapse personal access tokens. Token can be generated in Synpase via your User
+Synapse personal access tokens. Token can be generated in Synapse via your User
 Menu > Settings > Persona Access Tokens.
 
 # Conda environments
@@ -35,7 +39,7 @@ Activate the environment `sage-bionetworks`.
 use_condaenv("sage-bionetworks", required = TRUE)
 ```
 
-# Loging into your Synapse account
+# Logging into your Synapse account
 
 ```{r}
 # Prepare Synapse Python Client
@@ -49,5 +53,5 @@ syn <- synapseclient$Synapse()
 syn$login()
 ```
 
-Upon successful logging, the message "Welcome, <your name>!" should be displayed
+Upon successful logging, the message "Welcome, your name!" should be displayed
 above.
