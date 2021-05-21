@@ -57,10 +57,10 @@ Rmd Notebook | Description | HTML Notebook
 [sagethemes.Rmd](notebooks/examples/sagethemes.Rmd)     | Example notebook provided by the R library [sagethemes]. | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/sagethemes.html)
 [synapse.Rmd](notebooks/examples/synapse.Rmd)           | Shows how to interact with Synapse API.                  | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/synapse.html)
 
-> Important: Please be careful when you write your own notebooks to make sure
-> that no sensitive information ends up being publicly available. Please check
-> with the information security officer of your organization to confirm that the
-> approach described here can be applied to your use case.
+> Important: Please make sure when you write your own notebooks that no
+> sensitive information ends up being publicly available. Please check with the
+> information security officer of your organization to confirm that the approach
+> described here can be applied to your use case.
 
 ## Usage
 
@@ -81,9 +81,8 @@ in detached mode, you will only need to enter `docker-compose down`.
 
 ## How to use this repository
 
-You can use the image [tschaffter/rstudio] as-is to start an instance of
-RStudio and develop tools that interact with Sage Bionetworks services, e.g.
-Synapse.
+You can use the image [tschaffter/rstudio] as-is to start an instance of RStudio
+and develop tools that interact with Sage Bionetworks services, e.g. Synapse.
 
 If you want to create a portable development environment, start by creating a
 new GitHub repository from [this template]. You can then customize your
@@ -112,7 +111,7 @@ in `Dockerfile` to install the required R libraries.
 
 See the content of the folder `conda` for an example of how to define a conda
 environment. The packages to add to this environment must be added to the file
-`requirements.txt`. The creating of one or more conda environments can be
+`requirements.txt`. The creation of one or more Conda environments can be
 specified in `Dockerfile`.
 
 ## Setting Synapse credentials
@@ -130,10 +129,10 @@ Bionetworks].
 
 ### From the terminal
 
-Attach to the RStudio container (here assuming that `rstudio` is the name of
-the container). For better safety, it is recommended to work as a non-root user.
-You can then list the environments available, activate an existing environment
-or create a new one.
+Attach to the RStudio container (here assuming that `rstudio` is the name of the
+container). For better safety, it is recommended to work as a non-root user. You
+can then list the environments available, activate an existing environment or
+create a new one.
 
 ```console
 $ docker exec -it rstudio bash
@@ -207,8 +206,8 @@ always point to the same git commit once it has been created.
 ### Docker tags
 
 The artifact published by this repository is the Docker image
-[tschaffter/rstudio]. The versions of the image are aligned with the
-versions of R/RStudio, not the GitHub tags of this repository.
+[tschaffter/rstudio]. The versions of the image are aligned with the versions of
+R/RStudio, not the GitHub tags of this repository.
 
 The table below describes the image tags available.
 
