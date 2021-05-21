@@ -7,7 +7,7 @@
 
 Docker image for analyses using RStudio and Python-Conda
 
-## Overview
+## Introduction
 
 The motivation for this project is to encourage the use of portal development
 environments in research and engineering. The environment should be intuitive to
@@ -44,6 +44,11 @@ All packages:
 
 - R (see [renv.lock] and [Dockerfile]).
 - Python (see [conda/sage-bionetworks/environment.yml]).
+
+### Requirements
+
+- [Docker Engine] >=19.03.0
+- [Docker Compose] >=1.27.0
 
 ## Example notebooks
 
@@ -269,3 +274,5 @@ Similarly, run this command to convert the notebook to PDF.
 [.github/workflows/ci.yml]: .github/workflows/ci.yml
 [Sage-Bionetworks-Challenges/challenge-analysis]: https://github.com/Sage-Bionetworks-Challenges/challenge-analysis
 [Sage-Bionetworks/rstudio]: https://github.com/Sage-Bionetworks/rstudio
+[Docker Engine]: https://docs.docker.com/engine/install/
+[Docker Compose]: https://docs.docker.com/compose/install/
