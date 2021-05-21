@@ -47,15 +47,20 @@ All packages:
 
 ## Example notebooks
 
-The notebooks listed below are automatically rendered to HTML and published to
-GitHub Pages by the [CI/CD workflow of this repository](.github/workflows/ci.yml).
+The example notebooks below are rendered to HTML and published to GitHub Pages
+by the [CI/CD workflow of this repository](.github/workflows/ci.yml).
 
-Notebook | Description | HTML Notebook
+Rmd Notebook | Description | HTML Notebook
 -------- | ----------- | -------------
 [notebook.Rmd](notebooks/examples/notebook.Rmd)         | Default RStudio notebook.                                | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/notebook.html)
 [r-and-python.Rmd](notebooks/examples/r-and-python.Rmd) | Shows how to use R and Python together.                  | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/r-and-python.html)
 [sagethemes.Rmd](notebooks/examples/sagethemes.Rmd)     | Example notebook provided by the R library [sagethemes]. | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/sagethemes.html)
 [synapse.Rmd](notebooks/examples/synapse.Rmd)           | Shows how to interact with Synapse API.                  | [![HTML notebook](https://img.shields.io/badge/latest-blue.svg?color=1283c3&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://tschaffter.github.io/rstudio/latest/notebooks/synapse.html)
+
+> Important: Please be careful when you write your own notebooks to make sure
+> that no sensitive information ends up being publicly available. Please check
+> with the information security officer of your organization to confirm that the
+> approach described here can be applied to your use case.
 
 ## Usage
 
