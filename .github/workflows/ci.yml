@@ -90,6 +90,8 @@ jobs:
         #   TAGS="$TAGS,${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
         fi
         echo ::set-output name=version::${VERSION}
+        echo ::set-output name=version_major::${MAJOR}
+        echo ::set-output name=version_minor::${MINOR}
         echo ::set-output name=tags::${TAGS}
         echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
         echo ::set-output name=push_image::${PUSH_IMAGE}
