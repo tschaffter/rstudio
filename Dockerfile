@@ -21,6 +21,8 @@ RUN apt-get update -qq -y \
         # Fix https://github.com/tschaffter/rstudio/issues/11 (1/2)
         libxtst6 \
         libxt6 \
+        # Lato font is required by the R library `sagethemes`
+        fonts-lato \
     && apt-get -y autoclean \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/* \
@@ -55,7 +57,8 @@ COPY renv.lock /tmp/renv.lock
 RUN install2.r --error renv \
     && R -e "renv::consent(provided=TRUE)" \
     && R -e "renv::restore(lockfile='/tmp/renv.lock')" \
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock
+    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds /tmp/renv.lock \
+    && R -e "extrafont::font_import(prompt=FALSE)"
 
 # Configure S6 init system
 RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
