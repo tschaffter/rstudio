@@ -126,7 +126,7 @@ jobs:
         builder: ${{ steps.buildx.outputs.name }}
         load: true
         push: false
-        platforms: linux/amd64
+        platforms: linux/amd64,linux/arm64
         tags: rstudio-cached:latest
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new
@@ -157,7 +157,7 @@ jobs:
         file: Dockerfile
         builder: ${{ steps.buildx.outputs.name }}
         push: true
-        platforms: linux/amd64
+        platforms: linux/amd64,linux/arm64
         tags: ${{ steps.prep.outputs.tags }}
         labels: |
           org.opencontainers.image.created=${{ steps.prep.outputs.created }}
