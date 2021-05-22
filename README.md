@@ -31,6 +31,8 @@ Features:
 - Benefit from regular updates of the image [tschaffter/rstudio] which will
   bring the latest versions of R/RStudio and other dependencies (Miniconda, R
   and Python packages).
+- You only need the Docker Engine on your system to develop code in R and Python
+  (see [Requirements](#requirements)).
 
 This image includes the following common Sage Bionetworks software:
 
@@ -48,7 +50,6 @@ All packages:
 ### Requirements
 
 - [Docker Engine] >=19.03.0
-- [Docker Compose] >=1.27.0
 
 ## Example notebooks
 
@@ -76,13 +77,13 @@ Rmd Notebook | Description | HTML Notebook
 
 2. Start RStudio. Add the option `-d` or `--detach` to run in the background.
 
-       docker-compose up
+       docker compose up
 
 RStudio is now available at http://localhost. On the login page, enter the
 default username (`rstudio`) and the password specified in `.env`.
 
-To stop RStudio, enter `Ctrl+C` followed by `docker-compose down`.  If running
-in detached mode, you will only need to enter `docker-compose down`.
+To stop RStudio, enter `Ctrl+C` followed by `docker compose down`.  If running
+in detached mode, you will only need to enter `docker compose down`.
 
 ## How to use this repository
 
@@ -197,7 +198,7 @@ docker run --rm \
     --env-file .env \
     -v $(pwd)/notebooks:/data \
     tschaffter/rstudio:4.0.5 \
-    render /data/examples/notebook.Rmd
+    render /data/examples/*.Rmd
 ```
 
 ## Versioning
