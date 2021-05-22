@@ -42,7 +42,7 @@ jobs:
         cp .env.example .env
         export $(grep -v '^#' .env | xargs -d '\n')
     - name: Validate docker-compose.yml
-      run: docker compose -f docker-compose.yml config >/dev/null
+      run: docker-compose -f docker-compose.yml config >/dev/null
 
   build-and-publish:
     needs: [test]
