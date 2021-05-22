@@ -124,7 +124,7 @@ jobs:
         context: .
         file: Dockerfile
         builder: ${{ steps.buildx.outputs.name }}
-        load: true
+        # load: true
         push: false
         platforms: linux/amd64,linux/arm64
         tags: rstudio-cached:latest
