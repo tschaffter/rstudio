@@ -44,7 +44,7 @@ This image includes the following common Sage Bionetworks software:
 
 All packages:
 
-- R (see [renv.lock] and [Dockerfile]).
+- R (see [renv.lock]).
 - Python (see [conda/sage-bionetworks/environment.yml]).
 
 ### Requirements
