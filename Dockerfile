@@ -49,6 +49,7 @@ RUN conda init bash \
     # Fix libssl issue that affects conda env used with reticulate
     && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 \
         /opt/miniconda/envs/sage-bionetworks/lib/libssl.so.1.1 \
+    # TODO: Use a test for success rather than `|| true`.
     && conda activate base || true \
     && echo "conda activate sage-bionetworks" >> ~/.bashrc
 

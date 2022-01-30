@@ -2,7 +2,7 @@ name: sage-bionetworks
 channels:
   - defaults
 dependencies:
-  - python=3.10.0
+  - python=3.9.4
   - pip=21.2.4
   - pip:
-    - -r file:requirements.txt
+    - -r requirements.txt
