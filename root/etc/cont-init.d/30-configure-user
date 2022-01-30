@@ -8,7 +8,10 @@ SYNAPSE_CONFIG_FILENAME="/home/${USER}/.synapseConfig"
 BASHRC_FILENAME="/home/${USER}/.bashrc"
 
 # Enable the user to update R libraries installed by root in Dockerfile
-chmod g+w -R /usr/local/lib/R
+chown -R ${USER}:${USER} /usr/local/lib/R
+
+# Give ownership of the miniconda envs to the user
+chown -R ${USER}:${USER} /opt/miniconda/envs/*
 
 # Change the shell of the user to bash
 usermod --shell /bin/bash ${USER}
