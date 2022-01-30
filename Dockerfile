@@ -3,7 +3,7 @@ FROM rocker/rstudio:4.1.2
 LABEL maintainer="thomas.schaffter@protonmail.com"
 LABEL description="Base image with RStudio and Conda"
 
-ENV miniconda3_version="py39_4.10.3"
+ENV miniconda3_version="py39_4.9.2"
 ENV miniconda_bin_dir="/opt/miniconda/bin"
 ENV PATH="${PATH}:${miniconda_bin_dir}"
 

@@ -100,6 +100,7 @@ the Docker repository where the image should be pushed (see Section
 Example projects that use this repository / image:
   - [Sage-Bionetworks/rstudio]
   - [Sage-Bionetworks-Challenges/challenge-analysis]
+  - [nlpsandbox/notebooks]
 
 ## Manage R and Python dependencies
 
@@ -277,3 +278,4 @@ Similarly, run this command to convert the notebook to PDF.
 [Sage-Bionetworks/rstudio]: https://github.com/Sage-Bionetworks/rstudio
 [Docker Engine]: https://docs.docker.com/engine/install/
 [Docker Compose]: https://docs.docker.com/compose/install/
+[nlpsandbox/notebooks]: https://github.com/nlpsandbox/notebooks
