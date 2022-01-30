@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   rstudio:
-    image: tschaffter/rstudio:4.0.5
+    image: tschaffter/rstudio:4.1.2
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/home/rstudio/awesome-project:rw
+      - ${PWD}:/home/rstudio/awesome-project:rw
     ports:
       - "${HOST_PORT}:8787"
     command: rstudio

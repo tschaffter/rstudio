@@ -1,9 +1,9 @@
-FROM rocker/rstudio:4.0.5
+FROM rocker/rstudio:4.1.2
 
 LABEL maintainer="thomas.schaffter@protonmail.com"
 LABEL description="Base image with RStudio and Conda"
 
-ENV miniconda3_version="py39_4.9.2"
+ENV miniconda3_version="py39_4.10.3"
 ENV miniconda_bin_dir="/opt/miniconda/bin"
 ENV PATH="${PATH}:${miniconda_bin_dir}"
 
@@ -61,7 +61,6 @@ RUN install2.r --error renv \
     && R -e "extrafont::font_import(prompt=FALSE)"
 
 # Configure S6 init system
-RUN mv /etc/cont-init.d/userconf /etc/cont-init.d/10-rstudio-userconf
 COPY root /
 
 WORKDIR /
