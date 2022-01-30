@@ -142,6 +142,7 @@ jobs:
 
     - name: Generate HTML notebooks
       run: |
+        rm -fr $(pwd)/notebooks/examples/synapse.Rmd
         docker run --rm \
           --env-file .env \
           -v $(pwd)/notebooks:/data \
