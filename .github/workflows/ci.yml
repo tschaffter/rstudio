@@ -22,7 +22,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Lint Dockerfiles
       uses: docker://hadolint/hadolint:latest
       with:
@@ -36,7 +36,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set environment variables
       run: |
         cp .env.example .env
@@ -48,7 +48,7 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Prepare build
       id: prep
