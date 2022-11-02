@@ -9,7 +9,7 @@ Docker image for analyses using RStudio and Python-Conda
 
 ## Introduction
 
-The motivation for this project is to encourage the use of portal development
+The motivation for this project is to encourage the use of portable development
 environments in research and engineering. The environment should be intuitive to
 use so that anyone can deploy it again and reproduce your results - even you six
 months from now!
