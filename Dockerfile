@@ -1,4 +1,4 @@
-FROM rocker/rstudio:4.1.2
+FROM rocker/rstudio:4.2.3
 
 LABEL maintainer="thomas.schaffter@protonmail.com"
 LABEL description="Base image with RStudio and Conda"
